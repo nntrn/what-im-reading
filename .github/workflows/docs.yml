@@ -2,8 +2,6 @@ name: Build Docs
 
 on:
   workflow_dispatch:
-  push:
-    branches: ["main"]
   repository_dispatch:
     types: [update_data]
 

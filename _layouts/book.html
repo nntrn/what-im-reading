@@ -1,0 +1,43 @@
+---
+layout: default
+type: book
+---
+{%- assign pagecreated = page.created | date_to_string: "ordinal", "US" %}
+{%- assign pagemodified = page.modified |  date_to_string: "ordinal", "US" -%}
+{%- assign annotations = site.data.activity | where: 'assetid', page.assetid  | sort: "cfi" %}
+{%- assign total = annotations.size %}
+{%- assign chapters = annotations | group_by: "chapter" %}
+<div class="flex gap" style="--gap:2rem">
+{%- include postlist.html %}
+<article class="content" style="--total: {{total}}">
+  <h2>{{page.title}}</h2>
+  <h3>{{page.author}}</h3>
+  <p>
+    First annotation on <time>{{pagecreated}}</time>. 
+    {%- if pagemodified != pagecreated -%} Last modified on <time>{{pagemodified}}</time>.{%- endif %}
+  </p>
+  <p>{{annotations.size}} bookmark{%- if annotations.size > 1 -%}s{%- endif -%}</p>
+  <hr>
+  <section class="flex">
+    <div class="chapters">
+    {%- for chapter in chapters %}
+    {%- assign sortedchapteritems = chapter.items | sort: "cfi" %}
+      <h3 id="{{chapter.name | slugify: 'latin'}}">{{chapter.name | replace: "#","" |strip}}</h3>
+      <ul>
+        {%- for annotation in sortedchapteritems %}
+        <li id="{{annotation.id}}" class="bookmark">
+          <q>{{annotation.text}}</q>
+          <br><span class="meta"><a href="#{{annotation.id}}">#{{annotation.id}}</a>&nbsp;&bull;&nbsp;<time>{{annotation.created|date: '%b %-d %Y %-I:%M%p'}}</time></span>
+        </li>
+        {%- endfor %}
+      </ul>
+    {%- endfor %}
+    </div>
+    <div class="toc">
+      {%- for chapter in chapters %}
+      <div style="--length: {{chapter.items|size}}"><a title="{{chapter.name|replace: '#',''|strip}}" href="#{{chapter.name | slugify: 'latin'}}">&mdash;</a></div>
+      {%- endfor %}
+    </div>
+  </section>
+</article>
+</div>

@@ -1,0 +1,92 @@
+#!/usr/bin/env bash
+set -e
+
+SCRIPT="$(realpath "$0")"
+DIR=${SCRIPT%/*}
+export OUTDIR=_data
+export ANNOTATIONS_FILE=annotations.json
+
+_log() { echo -e "\033[0;${2:-33}m$1\033[0m" 3>&2 2>&1 >&3 3>&-; }
+
+create_book_data() {
+  _log "Creating books.json..."
+  cat $ANNOTATIONS_FILE | jq -L $DIR 'include "books";   
+  map( select((.ZTITLE) and (.ZANNOTATIONSELECTEDTEXT|length) >10) |
+    . + { booklocation: epublocation(.ZANNOTATIONLOCATION), ZTITLE: (.ZTITLE|gsub("\"";"") | gsub("\\([^0-9]+\\)"; "";"x"))})
+  | group_by(.ZASSETID)
+  | map({
+      assetid: .[0].ZASSETID,
+      title: .[0].ZTITLE,
+      author: .[0].ZAUTHOR,
+      created: min_by(.ZANNOTATIONCREATIONDATE).ZANNOTATIONCREATIONDATE,
+      modified: max_by(.ZANNOTATIONCREATIONDATE).ZANNOTATIONCREATIONDATE,
+      tags: get_tags(.[0].ZGENRE),
+      slug: "\(get_author_slug(.[0].ZSORTAUTHOR))-\(slugify((.[0].ZTITLE|gsub("[^\\w\\s\\d]+";"";"x"))))",
+      count: length
+    })| map(. + {permalink: "\(.tags)/\(.slug)"})'
+}
+
+create_genre_data() {
+  _log "Creating genre.json..."
+  cat $ANNOTATIONS_FILE | jq -L $DIR 'include "books"; map({tag: get_tags(.ZGENRE)})| unique'
+}
+
+create_activity_data() {
+  _log "Creating activity.json..."
+  cat $ANNOTATIONS_FILE | jq -L $DIR 'include "books"; 
+    map(select((.ZTITLE) and (.ZANNOTATIONSELECTEDTEXT|length) >10))
+    | sort_by(.ZANNOTATIONCREATIONDATE)
+    | map({
+      id: .Z_PK,
+      assetid: .ZASSETID,
+      text: (.ZANNOTATIONSELECTEDTEXT|remove_citations|format_text),
+      created: .ZANNOTATIONCREATIONDATE,
+      location: .ZANNOTATIONLOCATION,
+      cfi:(epublocation(.ZANNOTATIONLOCATION)| map(lpad(3))|join("-")),
+      chapter: (if ((.ZFUTUREPROOFING5|length)>0) then .ZFUTUREPROOFING5 else chaptername(.ZANNOTATIONLOCATION) end),
+      rangestart: .ZPLLOCATIONRANGESTART
+    })
+    | sort_by(.id)'
+}
+
+create_word_data() {
+  cat $ANNOTATIONS_FILE | jq 'map({
+    Z_PK,
+    ZASSETID,
+    words: (.ZANNOTATIONSELECTEDTEXT
+      | gsub("[.?!] (?<a>[A-Z])"; (.a|ascii_downcase);"x")
+      | gsub("\([39]|implode)"; "")
+      | gsub("[^a-zA-Z]+";" ";"x")|split(" ")
+      | map(select(length >4))|sort|group_by(.)
+      | map([.[0],length])
+      | sort_by(.[1])
+      | map(join("-"))
+      | reverse)
+  })'
+}
+
+while true; do
+  case $1 in
+  -o | --out) OUTDIR="$2" && shift ;;
+  -r | --remote) FETCH_REMOTE=1 && shift ;;
+  *.json) ANNOTATIONS_FILE="$1" && shift ;;
+  esac
+  shift || break
+done
+
+if [[ ! -f $ANNOTATIONS_FILE || $FETCH_REMOTE -eq 1 ]]; then
+  _log "Fetching remote"
+  ANNOTATIONS_FILE=/tmp/annotations.json
+  curl --create-dirs -o $ANNOTATIONS_FILE https://raw.githubusercontent.com/nntrn/bookstand/assets/annotations.json
+fi
+
+if [[ -s $ANNOTATIONS_FILE ]]; then
+  _log "===> Files will be saved to $OUTDIR <===" 36
+  mkdir -p $OUTDIR
+  create_book_data >$OUTDIR/books.json
+  create_genre_data >$OUTDIR/genre.json
+  create_activity_data >$OUTDIR/activity.json
+else
+  _log "annotations is empty"
+fi
+# cat $ANNOTATIONS_FILE | jq -L $DIR -r 'include "books"; map({tag: get_tags(.ZGENRE)})' >$OUTDIR/tags.json

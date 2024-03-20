@@ -11,8 +11,7 @@
       <a title="{{book.count}} bookmark{%- if book.count > 1 -%}s{%- endif-%}" href="{{book.permalink|relative_url}}">{{book.title}}</a>
       {%- endif -%}
       {% assign progress = book.count | divided_by: tagtotal  %}
-
-      <span data-progress="{{progress |times: 100.00|round: 2 }}" style="--progress: {{progress |times: 360|round: 2 }}deg" class="progress">&nbsp;</span>
+      <!-- <span data-progress="{{progress |times: 100.00|round: 2 }}" style="--progress: {{progress |times: 360|round: 2 }}deg" class="progress">&nbsp;</span> -->
     </li>
     {%- endfor %}
   </ul>

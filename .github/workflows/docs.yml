@@ -4,6 +4,10 @@ on:
   workflow_dispatch:
   repository_dispatch:
     types: [update_data]
+  push:
+    paths:
+      - "_includes/**"
+      - "_layouts/**"
 
 permissions:
   contents: read

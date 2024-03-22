@@ -65,6 +65,17 @@ create_word_data() {
   })'
 }
 
+create_stats() {
+  mkdir -p $OUTDIR/stats
+  _log "Creating stats for monthly bookmarks"
+  cat $OUTDIR/activity.json |
+    jq 'sort_by(.created) 
+    | map(. + {groupby_label: (.created|fromdate|strftime("%b %Y"))}) 
+    | group_by(.groupby_label)
+    | map({key: .[0].groupby_label, value: length})
+    | from_entries' >$OUTDIR/stats/bookmarks_per_month.json
+}
+
 while true; do
   case $1 in
   -o | --out) OUTDIR="$2" && shift ;;
@@ -86,7 +97,9 @@ if [[ -s $ANNOTATIONS_FILE ]]; then
   create_book_data >$OUTDIR/books.json
   create_genre_data >$OUTDIR/genre.json
   create_activity_data >$OUTDIR/activity.json
+  create_stats
 else
   _log "annotations is empty"
 fi
+
 # cat $ANNOTATIONS_FILE | jq -L $DIR -r 'include "books"; map({tag: get_tags(.ZGENRE)})' >$OUTDIR/tags.json

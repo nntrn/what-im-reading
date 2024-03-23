@@ -1,0 +1,16 @@
+---
+layout: default
+type: genre
+---
+{%- assign title = page.tag -%}
+{%- assign pagetag = page.tag -%}
+{%- assign bookpages = site.data.books | where: 'tags', pagetag -%}
+<section>
+<h2>#{{pagetag}}</h2>
+<ul style="width:90%">
+  {% for book in bookpages -%}
+  {% assign bookurl = book.tags | join: "/" | join:  book.slug %}
+  <li><a href="{{  book.slug }}">{{book.title}}</a> by {{book.author}}</li>
+  {% endfor %}
+</ul>
+</section>

@@ -11,10 +11,6 @@ layout: default
   <th data-level="1"><h2 id="{{books.name| slugify: 'latin'}}">{{books.name| replace: "-", " " |capitalize}}</h2></th>
   <td></td>
 </tr>
-<tr>
-  <td class="right">started <mark><strong>{{list.size}}</strong>&nbsp;book{% if list.size > 1 %}s{%- endif -%}</mark></td>
-  <td></td>
-</tr>
 {%- for book in list %}
 {%- assign statcount = site.data.stats.bookmarks_per_month[books.name]  %}
 <tr data-genre="{{book.tags}}" data-created="{{book.created}}" data-author="{{book.author}}" data-count="{{book.count}}">
@@ -28,7 +24,13 @@ layout: default
 {%- endfor %}
 <tr>
   <td></td>
-  <td>created <mark><strong>{{statcount}}</strong>&nbsp;bookmark{% if statcount > 1 %}s{%- endif -%}</mark></td>
+  <td>
+    <div class="flex muted gap" style="--gap:.5rem">
+      <span>started <mark><strong>{{list.size}}</strong>&nbsp;book{% if list.size > 1 %}s{%- endif -%}</mark></span>
+      <span>&sol;</span>
+      <span>created <mark><strong>{{statcount}}</strong>&nbsp;bookmark{% if statcount > 1 %}s{%- endif -%}</mark></span>
+    </div>
+  </td>
 </tr>
 <tr><td colspan="2"><br></td></tr>
 {%- endfor -%}

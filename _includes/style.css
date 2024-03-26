@@ -1,6 +1,6 @@
 :root{--px-size:2.5%;--progress-size:13px}
 *{box-sizing:border-box}
-html{font-size:12px}
+html{font-size:13px}
 .h100,body,html,main{height:100%}
 body{font-variant:proportional-width;display:flex;flex-direction:column;gap:.25rem;scrollbar-width:thin;margin:0 0;padding:0 0;margin:auto;font-family:Helvetica Neue,Helvetica,Arial,sans-serif;font-size:inherit;line-height:1.25;counter-reset:reversed(section);text-rendering:optimizeLegibility;overflow-y:hidden}
 br{line-height:0!important;font-size:0!important}
@@ -21,6 +21,7 @@ aside a,aside u{text-underline-offset:1.25px;text-decoration-skip-ink:none;text-
 aside a:hover{color:#222;text-decoration-color:#aaa}
 aside h4 a{font-family:sans-serif;font-size:.9em}
 aside strong{font-weight:700;display:block;line-height:1.1}
+aside ul{display:inline-flex;gap:.25rem;position:relative;position:sticky;top:0}
 h1,h2,h4{margin:0 0}
 h3{margin:.5rem 0}
 h1 a{color:#222}
@@ -44,17 +45,17 @@ tr>*{padding-bottom:.5rem;padding-top:.5rem}
 td,th{vertical-align:top}
 td label{font-size:.9em}
 th date{white-space:pre;font-weight:400;color:#8e8e8e}
-th{border-right:1.5px dotted #222}
+th{border-right:1px dotted #222}
 th[data-level="1"]{text-align:right;border:0;font-size:1.4em;white-space:pre;transition:all .6s linear;max-width:min-content}
 th[data-level="2"]{text-align:right}
 td[colspan]{padding-left:11%}
 tr{line-height:1.2}
 .right{text-align:right}
-mark{background:0 0}
+mark{background:0 0;color:inherit}
 mark strong{color:#fff;background:#222;padding:0 2px}
 mark strong{font-size:.9rem}
 [colspan] h2{padding-top:1.5rem}
-.bookmark .meta{font-size:.9rem;color:#aaa;text-transform:uppercase;font-variant:proportional-nums}
+.bookmark .meta{font-size:.9rem;color:#d63864;text-transform:uppercase;font-variant:proportional-nums}
 .bookmark a{text-decoration:none}
 .bookmark{padding:0 .5rem}
 .bold{font-weight:700}
@@ -77,9 +78,10 @@ mark strong{font-size:.9rem}
 .gap{gap:var(--gap,.25rem)}
 .list>li{padding:0 0}
 .mark q{background:#fff0b1;line-height:1.4}
-.meta a:hover{text-decoration:none;color:#a7a7a7}
-.meta a{color:#000;font-weight:700}
+.meta a:hover{text-decoration:none;color:#222}
+.meta a{color:inherit;font-weight:700}
 .meta{margin-top:.25rem}
+.muted{color:#aaa}
 .padded{padding-left:.75rem;padding-right:.75rem}
 .chapters{flex:1}
 .toc{max-height:min(300px,40vh);position:sticky;top:0;list-style:none;padding:0 0;margin:0 0;z-index:1;width:20px;max-width:20px}
@@ -90,7 +92,6 @@ mark strong{font-size:.9rem}
 .toc a:before{font-weight:500}
 .site-title a{text-decoration-color:rgba(0,0,0,.1);text-underline-offset:2px;text-decoration-thickness:1.75px;font-family:times;font-weight:700;font-size:.9em;text-decoration-skip-ink:all}
 [id]>a:hover:after{content:"#";color:#aaa}
-aside ul{display:inline-flex;gap:.1rem;position:relative;position:sticky;top:0}
 @media (max-width:750px){
 aside .container{min-height:20vh}
 main>.flex{display:flex;flex-direction:column-reverse}

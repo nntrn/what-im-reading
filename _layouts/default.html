@@ -28,15 +28,18 @@
   </style>
 </head>
 <body>
-<header>
-  <h1 class="site-title"><a href="{{ '/' | relative_url }}">{{site.title}}</a></h1>
-</header>
-<main>
-{{ content }}
-<footer>
-  <p>Created by <a href="https://github.com/{{site.repository}}">@{{site.github_username}}</a></p>
-</footer>
-</main>
+<div class="container">
+  <header>
+    <h1 class="site-title"><a href="{{ '/' | relative_url }}">{{site.title}}</a></h1>
+    <div class="hidden show-md">Created by <a href="https://github.com/{{site.repository}}">@{{site.github_username}}</a></div>
+  </header>
+  <main>
+  {{ content }}
+  <footer>
+    <p>Created by <a href="https://github.com/{{site.repository}}">@{{site.github_username}}</a></p>
+  </footer>
+  </main>
+</div>
 {%- if page.type == "book" %}
 <script>
 {% include script.js %}

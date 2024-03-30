@@ -7,10 +7,17 @@ type: genre
 {%- assign bookpages = site.data.books | where: 'tags', pagetag -%}
 <section>
 <h2>#{{pagetag}}</h2>
-<ul style="width:90%">
-  {% for book in bookpages -%}
-  {% assign bookurl = book.tags | join: "/" | join:  book.slug %}
-  <li><a href="{{  book.slug }}">{{book.title}}</a> by {{book.author}}</li>
+<ul style="--gap:.25rem;width:90%">
+  {%- assign sortedbook = bookpages | sort: 'title' %}
+  {%- for book in sortedbook %}
+  {%- assign bookurl = book.tags | join: "/" | join:  book.slug %}
+  <li class="lh-2">
+    <span><a href="{{ book.slug }}">{{book.title}}</a> by {{book.author}}</span><br>
+    <label class="bull small">
+      <span>{{book.count}} bookmarks</span>
+      <span>last read on <time>{{book.modified|date: '%b %Y'}}</time></span>
+    </label>
+  </li>
   {% endfor %}
 </ul>
 </section>

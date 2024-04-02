@@ -19,7 +19,7 @@ compress_html:
   profile: false
 
 page_gen:
-  - data: "genre"
+  - data: "genres"
     template: "genre"
     index_files: true
     dir: "tag"

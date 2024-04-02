@@ -2,15 +2,11 @@
 layout: default
 type: genre
 ---
-{%- assign title = page.tag -%}
-{%- assign pagetag = page.tag -%}
-{%- assign bookpages = site.data.books | where: 'tags', pagetag -%}
+{%-  assign booklist = page.books | sort: "title" %}
 <section>
-<h2>#{{pagetag}}</h2>
+<h2>#{{page.tag}}</h2>
 <ul style="--gap:.25rem;width:90%">
-  {%- assign sortedbook = bookpages | sort: 'title' %}
-  {%- for book in sortedbook %}
-  {%- assign bookurl = book.tags | join: "/" | join:  book.slug %}
+  {%- for book in booklist %}
   <li class="lh-2">
     <span><a href="{{ book.slug }}">{{book.title}}</a> by {{book.author}}</span><br>
     <label class="bull small">
@@ -18,6 +14,6 @@ type: genre
       <span>last read on <time>{{book.modified|date: '%b %Y'}}</time></span>
     </label>
   </li>
-  {% endfor %}
+  {%- endfor %}
 </ul>
 </section>

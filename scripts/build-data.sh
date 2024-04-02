@@ -28,7 +28,8 @@ create_book_data() {
 
 create_genre_data() {
   _log "Creating genre.json..."
-  cat $ANNOTATIONS_FILE | jq -L $DIR 'include "books"; map({tag: get_tags(.ZGENRE)})| unique'
+  cat $OUTDIR/books.json |
+    jq 'group_by(.tags)|map({tag: (.[0].tags), books: (map(del(.tags))) })'
 }
 
 create_activity_data() {
@@ -74,6 +75,16 @@ create_stats() {
     | group_by(.groupby_label)
     | map({key: .[0].groupby_label, value: length})
     | from_entries' >$OUTDIR/stats/bookmarks_per_month.json
+
+  cat $OUTDIR/activity.json |
+    jq 'map(.+{sort:(.created|fromdate|strftime("%Y-%m")),d:(.created|fromdate|strftime("%b %Y"))})
+      | sort_by(.sort) | group_by(.d)|sort_by(.[0].sort)
+      | map({(.[0].d): {
+          started: (map(.assetid)|unique), 
+          saved_count: length, 
+          saved: (group_by(.assetid)|map({(.[0].assetid): length})|add)  
+          } 
+      }) | add' >$OUTDIR/stats/month.json
 }
 
 while true; do
@@ -95,7 +106,7 @@ if [[ -s $ANNOTATIONS_FILE ]]; then
   _log "===> Files will be saved to $OUTDIR <===" 36
   mkdir -p $OUTDIR
   create_book_data >$OUTDIR/books.json
-  create_genre_data >$OUTDIR/genre.json
+  create_genre_data >$OUTDIR/genres.json
   create_activity_data >$OUTDIR/activity.json
   create_stats
 else

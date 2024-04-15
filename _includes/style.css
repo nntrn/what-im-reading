@@ -17,8 +17,8 @@
   --accent-color: hsl(var(--h), var(--s), var(--l));
   --gray: hsl(0, 0%, var(--l, 80%))
 }
-.hidden,[hidden]{display:none}
 *{box-sizing:border-box}
+.hidden,[hidden]{display:none}
 html{font-size:13px}
 body,html,main{height:100%}
 body{font-variant:proportional-width;scrollbar-width:thin;padding:0 0;margin:auto;font-family:var(--sans-serif);font-size:inherit;line-height:1.3;text-rendering:optimizeLegibility;font-variant:proportional-width}
@@ -42,7 +42,7 @@ h3 a{text-transform:capitalize;text-decoration:none;color:initial;font-size:1.3r
 hr{border:0;border-bottom:1px solid #aaa;margin:1rem 0}
 label span:empty{display:none}
 ul.list{padding:0 0rem;list-style:none;padding-right:1rem}
-ul{display:flex;flex-direction:column;gap:.75rem;padding:0 2rem;padding-right:1rem}
+ul{display:flex;flex-direction:column;gap:.75rem;padding:0 1rem;padding-right:1rem}
 ul>li{padding:0 .4rem}
 ol,ul{padding:0 1.35rem}
 ol{padding-left:0}
@@ -94,8 +94,8 @@ tr .padded:nth-child(2){padding-left:.75rem}
 .postlist ul a{text-decoration-color:#ccc;font-weight:400;text-decoration-thickness:2px}
 .postlist ul a:hover{text-decoration-color:currentColor}
 .postlist strong{font-weight:700;display:block;line-height:1.1}
-.postlist u{color:var(--body-color);text-decoration-color:var(--accent-color);text-decoration-skip-ink:all;font-weight:500}
-.postlist ul{display:inline-flex;gap:.4rem;position:relative;position:sticky;top:0;line-height:1.3}
+.postlist u{color:var(--body-color);text-decoration-color:var(--accent-color);text-decoration-skip-ink:none;font-weight:500}
+.postlist ul{display:inline-flex;gap:.4rem;position:relative;position:sticky;top:0;line-height:1.3;font-size:.925rem}
 .chapters{display:flex;flex-direction:column;gap:4rem;margin:2.5rem 0;margin-bottom:1rem}
 .chapters ul{position:relative;margin:0 0}
 .chapters ul[data-label]:before{/*! text-transform:uppercase; */font-size:1.3rem;content:attr(data-label);margin:0 0;padding:0 0;position:absolute;left:0;margin-top:-2.5rem;font-family:times;font-weight:700}
@@ -107,6 +107,7 @@ tr .padded:nth-child(2){padding-left:.75rem}
 .toc a:hover{text-decoration:none;color:var(--accent-color)}
 .toc a:hover:before{content:attr(title);position:absolute;right:1.5rem;background:var(--accent-color);padding:2px 4px;color:var(--body-color);z-index:1;font-size:.8rem}
 .site-title a{text-underline-offset:2px;text-decoration-thickness:3px;font-family:times;font-weight:700;font-size:.9em;text-decoration-skip-ink:all;text-decoration-color:currentColor}
+.site-title a:hover{text-decoration-color:var(--accent-color)}
 [id]>a:hover:after{content:"#";color:#aaa}
 @media (max-width:600px){
 .container{flex-direction:column}
@@ -115,7 +116,6 @@ tr .padded:nth-child(2){padding-left:.75rem}
 @media (max-width:750px){
 .md-colr,main>.flex{display:flex;flex-direction:column-reverse}
 :root{--px-size:1rem}
-.postlist ul{margin:1rem .5rem}
 ol{padding:0 2.5rem}
 ol li{list-style:unset;padding-left:unset}
 }

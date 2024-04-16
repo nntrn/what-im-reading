@@ -23,11 +23,11 @@ scripts: ["scripts/book.js"]
     {%- assign sortedchapteritems = chapter.items | sort: "cfi" %}
       <ul id="{{chapter.name | slugify: 'latin'}}" data-label="{{chapter.name|replace:'#',''|strip}}">
         {%- for annotation in sortedchapteritems %}
-        <li id="{{annotation.id}}" class="bookmark">
+        <li id="{{annotation.id}}" class="bookmark lh-2">
           <q>{{annotation.text}}</q>
-          <span class="meta bull">
-            <span><a class="bgh" href="#{{annotation.id}}">#{{annotation.id}}</a></span>
-            <time>{{annotation.created|date: '%b %-d %Y %-I:%M%p'}}</time>
+          <span class="small up muted flex gap" style="--gap:3px">
+            <a class="u0" href="#{{annotation.id}}">#{{annotation.id}}</a><span>&bull;</span>
+            <time>{{annotation.created|date:'%b %-d %Y %-I:%M%p'}}</time>
           </span>
         </li>
         {%- endfor %}

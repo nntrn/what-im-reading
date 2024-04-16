@@ -5,14 +5,15 @@ type: genre
 {%-  assign booklist = page.books | sort: "title" %}
 <section>
 <h2>#{{page.tag}}</h2>
-<ul style="--gap:.25rem;width:90%">
+<ul style="--small:.85rem;--gap:.25rem;width:90%" class="lh-3">
   {%- for book in booklist %}
-  <li class="lh-2">
-    <span><a href="{{ book.slug }}">{{book.title}}</a> by {{book.author}}</span><br>
-    <label class="bull small">
-      <span>{{book.count}} bookmarks</span>
-      <span>last read on <time>{{book.modified|date: '%b %Y'}}</time></span>
-    </label>
+  <li>
+    <div class="lh-1"><a href="{{book.slug}}" class="no-underline">{{book.title}}</a> by {{book.author}}</div>
+    <div class="flex small gap" style="--gap:4px">
+      <span class="heart">{{book.count}}<span class="heart" hidden>&hearts;</span></span>
+      <span>&bull;</span>
+      <span class="muted">last read on <time class="fs8 darker">{{book.modified|date: '%b %e %Y'}}</time></span>
+    </div>
   </li>
   {%- endfor %}
 </ul>

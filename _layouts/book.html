@@ -3,19 +3,20 @@ layout: default
 type: book
 scripts: ["scripts/book.js"]
 ---
-{%- assign pagecreated = page.created | date_to_string: "ordinal", "US" %}
-{%- assign pagemodified = page.modified |  date_to_string: "ordinal", "US" -%}
+{%- assign pagecreated = page.created | date: "%b %Y" %}
+{%- assign pagemodified = page.modified | date: "%b %Y" -%}
 {%- assign annotations = site.data.activity | where: 'assetid', page.assetid  | sort: "cfi" %}
 {%- assign chapters = annotations | group_by: "chapter" %}
 <div class="flex gap md-colr" style="--gap:1rem">
 {%- include postlist.html %}
 <article class="content">
-  <h2>{{page.title}}</h2>
-  <h3>{{page.author}}</h3>
-  <p>
-    First annotation on <time>{{pagecreated}}</time>.{%- if pagemodified != pagecreated -%}&nbsp;Last on <time>{{pagemodified}}</time>.{%- endif %}
+  <h2 class="book-title">{{page.title}}</h2>
+  <h3 class="book-author">{{page.author}}</h3>
+  <p style="--gap:3px" class="gap flex up small">
+    <time>{{pagecreated}}</time>
+    {%- if pagemodified != pagecreated -%}<span>&ndash;</span><time>{{pagemodified}}</time>{%- endif %}
   </p>
-  <p>{{annotations.size}} bookmark{%- if annotations.size > 1 -%}s{%- endif -%}</p>
+  <p><i class="star icon-md">{{annotations.size}}</i></p>
   <hr>
   <section class="flex">
     <div class="chapters">
@@ -25,10 +26,10 @@ scripts: ["scripts/book.js"]
         {%- for annotation in sortedchapteritems %}
         <li id="{{annotation.id}}" class="bookmark lh-2">
           <q>{{annotation.text}}</q>
-          <span class="small up muted flex gap" style="--gap:3px">
+          <div class="small up meta flex gap" style="--gap:3px">
             <a class="u0" href="#{{annotation.id}}">#{{annotation.id}}</a><span>&bull;</span>
             <time>{{annotation.created|date:'%b %-d %Y %-I:%M%p'}}</time>
-          </span>
+          </div>
         </li>
         {%- endfor %}
       </ul>

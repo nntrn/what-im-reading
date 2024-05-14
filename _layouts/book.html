@@ -12,11 +12,14 @@ scripts: ["scripts/book.js"]
 <article class="content">
   <h2 class="book-title">{{page.title}}</h2>
   <h3 class="book-author">{{page.author}}</h3>
-  <p style="--gap:3px" class="gap flex up small">
-    <time>{{pagecreated}}</time>
-    {%- if pagemodified != pagecreated -%}<span>&ndash;</span><time>{{pagemodified}}</time>{%- endif %}
+  <p class="flex gap wrap" style="--gap:3px">
+    <span><i class="star icon-md">{{annotations.size}}</i></span>
+    <span>&middot;</span>
+    <span style="--gap:3px" class="gap flex up small">
+      <time>{{pagecreated}}</time>
+      {%- if pagemodified != pagecreated -%}<span>&ndash;</span><time>{{pagemodified}}</time>{%- endif %}
+    </span>
   </p>
-  <p><i class="star icon-md">{{annotations.size}}</i></p>
   <hr>
   <section class="flex">
     <div class="chapters">

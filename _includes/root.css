@@ -10,7 +10,7 @@
   --link-rgb: 51, 102, 203;
   --meta-color: rgb(var(--meta-rgb));
   --body-color: rgb(var(--body-rgb));
-  --h: 126;
+  --h: 110;
   --s: 73.4%;
   --l: 54%;
   --hsl: var(--h), var(--s), var(--l);

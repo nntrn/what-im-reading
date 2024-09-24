@@ -32,10 +32,11 @@
 <div class="container">
   <header class="mt-2 mb-4">
     <h1 class="site-title my-0 mb-2"><a href="{{ '/' | relative_url }}">{{site.title}}</a></h1>
-    <div class="d-flex gap-3">
+    <div class="d-flex gap-2 smaller">
     {%- for link in site.links %}
-      <a href="{{ site.baseurl }}/{{link}}">{{link}}</a>
+      <a class="text-dark" href="{{ site.baseurl }}/{{link}}">{{link}}</a>
     {%- endfor %}
+      <a class="text-dark" href="https://github.com/{{site.repository}}">github</a>
     </div>
   </header>
   <main id="top">

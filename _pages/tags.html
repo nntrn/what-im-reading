@@ -18,32 +18,21 @@ h2>a{color:#222;text-decoration:none;font-weight:700}
 </style>
 {% assign genres = site.data.genres %}
 <div class="column-container">
-{%- for genre in genres -%}
+{%- for genre in genres %}
   <div class="column-group">
     <h2 id="{{genre.tag}}" class="h5 text-uppercase border-bottom border-2 text-black border-black"><a href="{{ site.baseurl }}/{{genre.tag}}">{{genre.tag}}</a></h2>
-    <ul class="posts d-flex flex-column gap-3 py-3 px-0" data-tag="{{genre.name}}">
-      {%- assign books = genre.books %}
-      {%- for book in books -%}
-        {%- assign bookmodified = book.modified | date: "%b %Y" -%}
-        <li class="d-flex flex-column w-100" data-modified="{{book.modified|date: '%F' }}">
-            <h3 class="h6"><a href="{{ site.baseurl }}/{{genre.tag}}/{{book.slug}}">{{book.title}}</a></h3>
-            <span class="clamp small">{{book.author}}</span>
-            <div class="d-flex text-muted text-uppercase gap-1 small">
-              <span data-label="last read">{{ bookmodified }}</span>
-              {%- comment -%}
-              {%- assign bookcreated = book.created | date: "%b %d" -%}
-              {%- assign bookmodified = book.modified | date: "%b %Y" -%}
-              {%- if bookmodified != bookcreated %}
-              <span>&bullet;</span>
-              <span data-label="updated">{{book.modified|date: '%b %-d %Y'}}</span>
-              {%- endif -%} 
-              {%- endcomment %}
-              <span>&bullet;</span>
-              <span class="pre">{{book.count}}</span>
-            </div>
-        </li>
-      {%- endfor -%}
-    </ul>
+    <ol class="posts d-flex flex-column gap-3 py-2" data-tag="{{genre.name}}">
+    {%- assign books = genre.books %}
+    {%- for book in books %}
+      {%- assign bookmodified = book.modified | date: "%b %Y" -%}
+      {%- assign bookcreated = book.created | date: "%b %Y" %}
+      <li class="lh-1" data-modified="{{book.modified|date: '%F' }}" data-created="{{book.created|date:'%F'}}">
+        <a class="h6 link-primary" href="{{ site.baseurl }}/{{genre.tag}}/{{book.slug}}">{{book.title}}</a>
+        <span class="clamp smaller">{{book.author}}</span>
+        <span class="text-uppercase small text-muted">{{ bookmodified }} &bullet; {{book.count}}</span>        
+      </li>
+    {%- endfor %}
+    </ol>
   </div>
 {%- endfor -%}
 </div>

@@ -8,7 +8,7 @@ type: genre
 <ul style="width:90%" class="d-flex flex-column gap-3">
   {%- for book in booklist %}
   <li>
-    <h4 class="h6"><a href="{{book.slug}}">{{book.title}}</a> by {{book.author|split: ","|first}}</h4>
+    <h4 class="h6 my-0"><a href="{{book.slug}}">{{book.title}}</a> by {{book.author|split: ","|first}}</h4>
     <div class="d-flex small gap" style="--gap:4px">
       <span class="accent">{{book.count}} annotation{% if book.count > 1 %}s{%- endif -%}</span>
       <span>&bull;</span>

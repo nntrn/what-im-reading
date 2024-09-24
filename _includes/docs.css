@@ -1,8 +1,6 @@
 aside{border-top:dotted 2px gray;padding-top:2rem}
 h2{margin:.5rem 0}
-h3,h4,h5{margin-bottom:.25rem}
-h3,h4,h5{margin-top:0}
-h3{margin:0 0}
+h3,h4,h5{margin:0 0}
 q:after{content:""}
 q:before{content:""}
 .bookmark q{white-space:pre-wrap}
@@ -14,3 +12,7 @@ q:before{content:""}
 .toc a:hover{text-decoration:none;background:#eee}
 .toc a:hover:after{text-decoration:none;border:0;content:attr(title);position:absolute;right:1.5rem;background:#fff;padding:2px 4px;z-index:1;font-size:.8rem}
 .mark q{background:var(--bs-highlight-bg)}
+.smaller{font-size:.9em}
+.muted{color:#aaa}
+.sans-serif{font-family:var(--bs-font-sans-serif)}
+a{text-decoration-skip-ink:none}

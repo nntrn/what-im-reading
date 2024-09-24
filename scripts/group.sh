@@ -43,13 +43,20 @@ permalink: /activity
 ---
 
 <style>
-li p{margin: 0 0;}
 span[started]:after{content:"*";color:red}
+main{font-size:12px;line-height:1.15}
+main>ul{padding-left:0;list-style:none;display:flex;flex-direction:column;gap:1rem}
+li ul strong{font-weight:500}
+strong a{text-decoration:none;font-weight:700;color:inherit}
+li p strong{color:#000;font-weight:700;font-size:.95rem}
+li p{margin:0 0;padding-bottom:.25rem}
+ul{list-style-type:disc}
+li,ul{color:#666}
+h2{font-size:1.4rem;text-align:right;margin-right:10%;border-bottom:2px dotted gray;margin:2rem 0;padding:0 .5rem}
 </style>
 
 # Reading Activity 
 
-<span started="1"></span> = started book 
 '
 
 jq -r --slurpfile books $DATADIR/books.json '($books[] | 
@@ -62,8 +69,8 @@ jq -r --slurpfile books $DATADIR/books.json '($books[] |
     | map(.date as $d2 | [
       "* **\(.date)**" ,
       "", 
-     (.books | map("  - \(.count) annotation\(if .count > 1 then "s" else "" end) for [" + $asset[.assetid].title + "][\(.assetid)]" 
-      + (if $asset[.assetid].cdate == $d2 then " <span started=1></span>" else "" end)  )),""][] )|flatten|join("\n"))  
+     (.books | map("  - [" + $asset[.assetid].title + "][\(.assetid)] - \(.count) annotation\(if .count > 1 then "s" else "" end)" 
+      + (if $asset[.assetid].cdate == $d2 then "  \n  - **Started [\($asset[.assetid].title)][\(.assetid)]**" else "" end)  )),""][] )|flatten|join("\n"))  
   ])
   | flatten(2)
   | join("\n\n") +"\n"' $HISTORYDATAPATH

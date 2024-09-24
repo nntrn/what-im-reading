@@ -30,7 +30,7 @@ scripts: ["scripts/book.js"]
         <li id="{{annotation.id}}" class="bookmark px-2">
           <q>{{annotation.text}}</q>
           <div class="small d-flex text-uppercase gap mt-1" style="--gap:3px">
-            <a href="#{{annotation.id}}">#{{annotation.id}}</a>
+            <a class="fw-semibold" href="#{{annotation.id}}">#{{annotation.id}}</a>
             <span>&bull;</span>
             <time class="text-muted">{{annotation.created|date:'%b %-d %Y %-I:%M%p'}}</time>
           </div>

@@ -1,23 +1,21 @@
-root{
-  --line-height:1.3
-}
-[data-layout="monospace"]{
-  --bs-body-font-family: courier,monospace;
-}
-
-[data-layout="serif"]{
-  --bs-body-font-family: times,serif;
+[data-layout=monospace] {
+  font-family: courier, monospace;
+  line-height: 1.15;
+  font-size: 14px
 }
 
-[data-layout="sans-serif"]{
-  --bs-body-font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+[data-layout=serif] {
+  font-family: times, serif;
+  line-height: 1.3;
+  font-size: 14px
 }
 
-body{
-  font-family: var(--bs-body-font-family);
-  line-height:1.2;
+[data-layout=sans-serif] {
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  line-height: 1.3;
+  font-size: 14px
 }
 
 @media (min-width:900px){
-body > .container{max-width:80%;margin:0 auto}
+body>.container{max-width:80%;margin:0 auto}
 }

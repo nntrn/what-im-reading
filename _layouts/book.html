@@ -1,0 +1,49 @@
+---
+layout: default
+type: book
+scripts: ["scripts/book.js"]
+---
+{%- assign pagecreated = page.created | date: "%b %Y" %}
+{%- assign pagemodified = page.modified | date: "%b %Y" -%}
+{%- assign annotations = site.data.activity | where: 'assetid', page.assetid  | sort: "cfi" %}
+{%- assign chapters = annotations | group_by: "chapter" %}
+
+<article class="content d-flex flex-column gap-2">
+  <h2 class="my-0">{{page.title}}</h2>
+  <h3 class="h5">{{page.author}}</h3>
+  <div class="d-flex flex-sm-wrap gap-1">
+    <span>{{annotations.size}} annotation{% if annotations.size > 1 %}s{%- endif -%}</span>
+    <span class="accent">&bull;</span>
+    <span style="--gap:3px" class="gap flex">
+      <span title="Created">{{pagecreated}}</span>
+      {%- if pagemodified != pagecreated -%}<span>&ndash;</span><span title="Modified">{{pagemodified}}</span>{%- endif %}
+    </span>
+  </div>
+  <hr>
+  <section class="d-flex gap-3">
+    <div class="chapters d-flex flex-column gap-3">
+    {%- for chapter in chapters %}
+    {%- assign sortedchapteritems = chapter.items | sort: "cfi" %}
+      <h3 class="h4" id="{{chapter.name | slugify: 'latin'}}">{{chapter.name|replace:'#',''|strip}}</h3>
+      <ul class="d-flex flex-column gap-3" style="--gap:1rem">
+        {%- for annotation in sortedchapteritems %}
+        <li id="{{annotation.id}}" class="bookmark px-2">
+          <q>{{annotation.text}}</q>
+          <div class="small d-flex text-uppercase gap mt-1" style="--gap:3px">
+            <a href="#{{annotation.id}}">#{{annotation.id}}</a>
+            <span>&bull;</span>
+            <time class="text-muted">{{annotation.created|date:'%b %-d %Y %-I:%M%p'}}</time>
+          </div>
+        </li>
+        {%- endfor %}
+      </ul>
+    {%- endfor %}
+    </div>
+    <div class="toc">
+    {%- for chapter in chapters %}
+      <a title="{{chapter.name|replace: '#',''|strip}}" href="#{{chapter.name | slugify: 'latin'}}">&mdash;</a>
+    {%- endfor %}
+    </div>
+  </section>
+</article>
+{%- include postlist.html %}

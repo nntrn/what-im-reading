@@ -1,0 +1,50 @@
+---
+layout: default
+permalink: /
+---
+
+<style>
+.pre{white-space:pre}
+.column-container{margin:auto;column-width:max(250px,20vw);column-fill:balance;gap:3rem;column-count:1}
+.column-group{page-break-inside:avoid;margin-bottom:1rem}
+h2{border-bottom:2px solid currentColor}
+h2>a{color:#222;text-decoration:none;font-weight:700}
+@media (min-width:650px){
+.column-container{column-count:2}
+}
+@media (min-width:950px){
+.column-container{column-count:3}
+}
+</style>
+{% assign genres = site.data.genres %}
+<div class="column-container">
+{%- for genre in genres -%}
+  <div class="column-group">
+    <h2 id="{{genre.tag}}" class="h5 text-uppercase border-bottom border-2 text-black border-black"><a href="{{ site.baseurl }}/{{genre.tag}}">{{genre.tag}}</a></h2>
+    <ul class="posts d-flex flex-column gap-3 py-3 px-0" data-tag="{{genre.name}}">
+      {%- assign books = genre.books %}
+      {%- for book in books -%}
+        {%- assign bookmodified = book.modified | date: "%b %Y" -%}
+        <li class="d-flex flex-column w-100" data-modified="{{book.modified|date: '%F' }}">
+            <h3 class="h6"><a href="{{ site.baseurl }}/{{genre.tag}}/{{book.slug}}">{{book.title}}</a></h3>
+            <span class="clamp small">{{book.author}}</span>
+            <div class="d-flex text-muted text-uppercase gap-1 small">
+              <span data-label="last read">{{ bookmodified }}</span>
+              {%- comment -%}
+              {%- assign bookcreated = book.created | date: "%b %d" -%}
+              {%- assign bookmodified = book.modified | date: "%b %Y" -%}
+              {%- if bookmodified != bookcreated %}
+              <span>&bullet;</span>
+              <span data-label="updated">{{book.modified|date: '%b %-d %Y'}}</span>
+              {%- endif -%} 
+              {%- endcomment %}
+              <span>&bullet;</span>
+              <span class="pre">{{book.count}}</span>
+            </div>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+{%- endfor -%}
+</div>
+

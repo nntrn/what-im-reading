@@ -1,0 +1,12 @@
+table{line-height:1.3;border-collapse:collapse}
+tr>*{padding-bottom:.5rem;padding-top:.5rem}
+td,th{vertical-align:top}
+th date{white-space:pre;font-weight:400;color:#8e8e8e}
+th{border-right:1px dotted var(--body-color);line-height:1}
+th[data-level="1"]{border:0;white-space:pre;transition:all .6s linear;max-width:min-content;text-align:right}
+th[data-level="2"]{text-align:right}
+td[colspan]{padding-left:11%}
+td[colspan] h2{padding-top:1.5rem}
+tr{line-height:1.2}
+tr .padded:nth-child(1){padding-right:.75rem}
+tr .padded:nth-child(2){padding-left:.75rem}

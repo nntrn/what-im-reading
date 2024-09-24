@@ -1,0 +1,17 @@
+{%- assign pagetag = page.tags  %}
+{%- assign books = site.data.books | where: 'tags', pagetag |sort: 'title' %}
+<aside class="my-3">
+  <h5>Other posts in <a class="fs-5" href="{{pagetag|relative_url}}">{{pagetag|upcase}}</a></h5>
+  <ul class="d-flex flex-column gap-2 my-3">
+    {%- for book in books %}
+    <li>
+      {%- if book.slug == page.slug -%}
+        <u>{{book.title}}</u>
+      {%- else -%}
+        <a title="{{book.count}} bookmark{%- if book.count > 1 -%}s{%- endif-%}" href="{{book.permalink|relative_url}}">{{book.title}}</a>
+      {%- endif -%}
+      <span class="text-muted">&nbsp;by {{book.author}}</span>
+    </li>
+    {%- endfor %}
+  </ul>
+</aside>

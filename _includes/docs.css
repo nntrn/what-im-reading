@@ -1,0 +1,16 @@
+aside{border-top:dotted 2px gray;padding-top:2rem}
+h2{margin:.5rem 0}
+h3,h4,h5{margin-bottom:.25rem}
+h3,h4,h5{margin-top:0}
+h3{margin:0 0}
+q:after{content:""}
+q:before{content:""}
+.bookmark q{white-space:pre-wrap}
+.clamp{display:-webkit-box!important;-webkit-line-clamp:var(--clamp-lines,1);-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis}
+.gap{gap:var(--gap)}
+.site-title{font-size:2rem}
+.toc{max-height:min(300px,40vh);position:sticky;top:1rem;font-size:.9rem;z-index:1;width:20px;max-width:20px}
+.toc a{display:block;text-decoration:none;font-weight:400;white-space:pre;padding:0 4px;line-height:1;color:#222}
+.toc a:hover{text-decoration:none;background:#eee}
+.toc a:hover:after{text-decoration:none;border:0;content:attr(title);position:absolute;right:1.5rem;background:#fff;padding:2px 4px;z-index:1;font-size:.8rem}
+.mark q{background:var(--bs-highlight-bg)}

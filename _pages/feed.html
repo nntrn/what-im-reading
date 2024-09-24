@@ -9,7 +9,9 @@ permalink: /feed
   {%- for books in books_by_date %}
   {%- assign list = books.items|sort:'created'|reverse %}
   <tr>
-    <th data-level="1"><h2 id="{{books.name|slugify:'latin'}}" class="my-0">{{books.name|replace:"-"," "|capitalize}}</h2></th>
+    <th data-level="1">
+      <h2 id="{{books.name|slugify:'latin'}}" class="mt-4 mb-3">{{books.name|replace:"-"," "|capitalize}}</h2>
+    </th>
     <td></td>
   </tr>
   {%- for book in list %}

@@ -14,7 +14,7 @@ scripts: ["scripts/book.js"]
   <div class="d-flex flex-sm-wrap gap-1">
     <span>{{annotations.size}} annotation{% if annotations.size > 1 %}s{%- endif -%}</span>
     <span class="accent">&bull;</span>
-    <span style="--gap:3px" class="gap flex">
+    <span style="--gap:5px" class="gap d-flex">
       <span title="Created">{{pagecreated}}</span>
       {%- if pagemodified != pagecreated -%}<span>&ndash;</span><span title="Modified">{{pagemodified}}</span>{%- endif %}
     </span>
@@ -32,7 +32,7 @@ scripts: ["scripts/book.js"]
           <div class="small d-flex text-uppercase gap mt-1" style="--gap:3px">
             <a class="fw-semibold" href="#{{annotation.id}}">#{{annotation.id}}</a>
             <span>&bull;</span>
-            <time class="text-muted">{{annotation.created|date:'%b %-d %Y %-I:%M%p'}}</time>
+            <time class="muted">{{annotation.created|date:'%b %-d %Y %-I:%M%p'}}</time>
           </div>
         </li>
         {%- endfor %}

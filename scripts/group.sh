@@ -37,7 +37,7 @@ jq 'map(
 jq -n --unbuffered env &>/dev/null
 
 echo '---
-title: Reading Activity
+title: activity
 layout: default
 permalink: /activity
 ---
@@ -52,11 +52,8 @@ li p strong{color:#000;font-weight:700;font-size:.95rem}
 li p{margin:0 0;padding-bottom:.25rem}
 ul{list-style-type:disc}
 li,ul{color:#666}
-h2{font-size:1.4rem;text-align:right;margin-right:10%;border-bottom:2px dotted gray;margin:2rem 0;padding:0 .5rem}
+h2{font-size:1.4rem;margin-right:10%;border-bottom:2px dotted gray;margin:2rem 0}
 </style>
-
-# Reading Activity 
-
 '
 
 jq -r --slurpfile books $DATADIR/books.json '($books[] | 

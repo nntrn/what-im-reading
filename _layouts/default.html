@@ -4,7 +4,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
   <meta charset="UTF-8">
-  <title>{{page.title|default:site.title}}</title>
+  <title>{{page.title|default:"✨"}} | {{site.title}}</title>
   <link rel="canonical" href="{{ page.url | absolute_url }}" />
   <link rel="icon" href="{{site.favicon_ico|relative_url}}" type="image/x-icon">
   <meta name="description" content="{{site.description}}" />
@@ -27,12 +27,16 @@
   <meta name="twitter:description" content="{{ page.description | default: site.description }}">
   <link rel="stylesheet" href="{{'/assets/vendor/bootstrap.css'|relative_url}}">
   <link rel="stylesheet" href="{{'/assets/minimal.css'|relative_url}}">
+  <style>
+  #btn-top{display:block;position:fixed;right:1rem;top:1rem;color:#aaa}
+  #btn-top:hover{background:#eee}
+  </style>
 </head>
 <body data-layout="{{site.font_family}}">
-<div class="container">
+<div class="container" id="ttop">
   <header class="mt-2 mb-4">
     <h1 class="site-title my-0 mb-2"><a href="{{ '/' | relative_url }}">{{site.title}}</a></h1>
-    <div class="d-flex gap-2 smaller">
+    <div class="d-flex gap-3 smaller">
     {%- for link in site.links %}
       <a class="text-dark" href="{{ site.baseurl }}/{{link}}">{{link}}</a>
     {%- endfor %}
@@ -58,6 +62,11 @@
       </div>
     </div>
   </footer>
+  <a id="btn-top" href="#ttop">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 16 16" fill="currentColor">
+      <path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm8.5 9.5a.5.5 0 0 1-1 0V5.7L5.4 8a.5.5 0 1 1-.8-.8l3-3a.5.5 0 0 1 .8 0l3 3a.5.5 0 0 1-.8.8L8.5 5.7z"/>
+    </svg>
+  </a>
   </main>
 </div>
 <script>

@@ -13,6 +13,6 @@ q:before{content:""}
 .toc a:hover:after{text-decoration:none;border:0;content:attr(title);position:absolute;right:1.5rem;background:#fff;padding:2px 4px;z-index:1;font-size:.8rem}
 .mark q{background:var(--bs-highlight-bg)}
 .smaller{font-size:.9em}
-.muted{color:#aaa}
+.muted{color:#a9a9a9}
 .sans-serif{font-family:var(--bs-font-sans-serif)}
 a{text-decoration-skip-ink:none}

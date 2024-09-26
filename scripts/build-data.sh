@@ -2,73 +2,27 @@
 set -e
 
 SCRIPT="$(realpath "$0")"
-DIR=${SCRIPT%/*}
+TOPDIR=${SCRIPT%/*/*}
+DIR=$TOPDIR
+SCRIPTDIR=${SCRIPT%/*}
+
+DEFAULT_REMOTE_URL=https://raw.githubusercontent.com/nntrn/bookstand/assets/annotations.json
+# DEFAULT_DATA_DIR=_data
+# DEFAULT_ANNOTATIONS_FILE=annotations.json
+
 export OUTDIR=_data
 export ANNOTATIONS_FILE=annotations.json
+export FETCH_REMOTE=${FETCH_REMOTE:-0}
+export REMOTE_URL="${DEFAULT_REMOTE_URL}"
+
+mkdir -p $OUTDIR
 
 _log() { echo -e "\033[0;${2:-33}m$1\033[0m" 3>&2 2>&1 >&3 3>&-; }
-
-create_book_data() {
-  _log "Creating books.json..."
-  cat $ANNOTATIONS_FILE | jq -L $DIR 'include "books";   
-  map( select((.ZTITLE) and (.ZANNOTATIONSELECTEDTEXT|length) >10) |
-    . + { booklocation: epublocation(.ZANNOTATIONLOCATION), ZTITLE: (.ZTITLE|gsub("\"";"") | gsub("\\([^0-9]+\\)"; "";"x"))})
-  | group_by(.ZASSETID)
-  | map({
-      assetid: .[0].ZASSETID,
-      title: .[0].ZTITLE,
-      author: .[0].ZAUTHOR,
-      created: min_by(.ZANNOTATIONCREATIONDATE).ZANNOTATIONCREATIONDATE,
-      modified: max_by(.ZANNOTATIONCREATIONDATE).ZANNOTATIONCREATIONDATE,
-      tags: get_tags(.[0].ZGENRE),
-      slug: "\(get_author_slug(.[0].ZAUTHOR))-\(slugify(.[0].ZTITLE))",
-      count: length
-    })| map(. + {permalink: "\(.tags)/\(.slug)"})'
-}
-
-create_genre_data() {
-  _log "Creating genre.json..."
-  cat $OUTDIR/books.json |
-    jq 'group_by(.tags)|map({tag: (.[0].tags), title: (.[0].tags), books: (map(del(.tags))) })'
-}
-
-create_activity_data() {
-  _log "Creating activity.json..."
-  cat $ANNOTATIONS_FILE | jq -L $DIR 'include "books"; 
-    map(select((.ZTITLE) and (.ZANNOTATIONSELECTEDTEXT|length) >10))
-    | sort_by(.ZANNOTATIONCREATIONDATE)
-    | map({
-      id: .Z_PK,
-      assetid: .ZASSETID,
-      text: (.ZANNOTATIONSELECTEDTEXT|remove_citations|format_text),
-      created: .ZANNOTATIONCREATIONDATE,
-      location: .ZANNOTATIONLOCATION,
-      cfi:(epublocation(.ZANNOTATIONLOCATION)| map(lpad(3))|join("-")),
-      chapter: (if ((.ZFUTUREPROOFING5|length)>0) then .ZFUTUREPROOFING5 else chaptername(.ZANNOTATIONLOCATION) end),
-      rangestart: .ZPLLOCATIONRANGESTART
-    })
-    | sort_by(.id)'
-}
-
-create_word_data() {
-  cat $ANNOTATIONS_FILE | jq 'map({
-    Z_PK,
-    ZASSETID,
-    words: (.ZANNOTATIONSELECTEDTEXT
-      | gsub("[.?!] (?<a>[A-Z])"; (.a|ascii_downcase);"x")
-      | gsub("\([39]|implode)"; "")
-      | gsub("[^a-zA-Z]+";" ";"x")|split(" ")
-      | map(select(length >4))|sort|group_by(.)
-      | map([.[0],length])
-      | sort_by(.[1])
-      | map(join("-"))
-      | reverse)
-  })'
-}
 
 create_stats() {
   mkdir -p $OUTDIR/stats
   _log "Creating stats for monthly bookmarks"
+
   cat $OUTDIR/activity.json |
     jq 'sort_by(.created) 
     | map(. + {groupby_label: (.created|fromdate|strftime("%b %Y"))}) 
@@ -87,28 +41,38 @@ create_stats() {
       }) | add' >$OUTDIR/stats/month.json
 }
 
+call_jq_func_annotation() {
+  local func=$1
+  _log "Creating $func"
+  cat $ANNOTATIONS_FILE | jq -L $SCRIPTDIR "include \"annotations\"; $func"
+}
+
+get_annotations() {
+  _log "Fetching remote from $REMOTE_URL"
+  curl -s --create-dirs -o $ANNOTATIONS_FILE "${REMOTE_URL}"
+}
+
 while true; do
   case $1 in
   -o | --out) OUTDIR="$2" && shift ;;
-  -r | --remote) FETCH_REMOTE=1 && shift ;;
-  *.json) ANNOTATIONS_FILE="$1" && shift ;;
+  -r | --remote) FETCH_REMOTE=1 ;;
+  -f | --force) FETCH_REMOTE=1 ;;
+  https*.json) REMOTE_URL="$1" ;;
+  *.json) ANNOTATIONS_FILE="$1" ;;
   esac
   shift || break
 done
 
-if [[ ! -f $ANNOTATIONS_FILE || $FETCH_REMOTE -eq 1 ]]; then
-  _log "Fetching remote"
-  ANNOTATIONS_FILE=/tmp/annotations.json
-  curl --create-dirs -o $ANNOTATIONS_FILE https://raw.githubusercontent.com/nntrn/bookstand/assets/annotations.json
+if [[ ! -f $ANNOTATIONS_FILE || ! -s $ANNOTATIONS_FILE || $FETCH_REMOTE -eq 1 ]]; then
+  get_annotations &
+  pid=$!
+  wait $pid
 fi
 
-if [[ -s $ANNOTATIONS_FILE ]]; then
-  _log "===> Files will be saved to $OUTDIR <===" 36
-  mkdir -p $OUTDIR
-  create_book_data >$OUTDIR/books.json
-  create_genre_data >$OUTDIR/genres.json
-  create_activity_data >$OUTDIR/activity.json
-  create_stats
-else
-  _log "annotations is empty"
-fi
+call_jq_func_annotation create_book_data >$OUTDIR/books.json &
+call_jq_func_annotation create_genre_data >$OUTDIR/genres.json &
+call_jq_func_annotation create_activity_data >$OUTDIR/activity.json &
+wait %3
+
+_log "finished" 34
+create_stats

@@ -28,8 +28,9 @@ jq 'map(
         | group_by(.ymd)
         | map({
             date: .[0].ymd, 
-            books: (map(.assetid)|group_by(.)|map({ assetid: .[0], count: length }))
-          }) 
+            books: (map(.assetid)|group_by(.)|map({ assetid: .[0], annotation_count: length }))
+          })
+        | reverse 
       )
   })
   | sort_by(.sortdt)|reverse' $DATADIR/activity.json >$HISTORYDATAPATH
@@ -56,20 +57,31 @@ h2{font-size:1.4rem;margin-right:10%;border-bottom:2px dotted gray;margin:2rem 0
 </style>
 '
 
-jq -r --slurpfile books $DATADIR/books.json '($books[] | 
-    map(. + {cdate: (.created|strptime("%Y-%m-%dT%H:%M:%SZ")|mktime|strftime("%Y-%m-%d"))}) | 
+cat $HISTORYDATAPATH |
+  jq -r --slurpfile books $DATADIR/books.json '
+  ($books[] |
+    map(. + {cdate: (.created|strptime("%Y-%m-%dT%H:%M:%SZ")|mktime|strftime("%Y-%m-%d"))}) |
     INDEX(.[];.assetid)
-  ) as $asset 
-  | map([
-    "## " +.month,
-    (.dates
-    | map(.date as $d2 | [
-      "* **\(.date)**" ,
-      "", 
-     (.books | map("  - [" + $asset[.assetid].title + "][\(.assetid)] - \(.count) annotation\(if .count > 1 then "s" else "" end)" 
-      + (if $asset[.assetid].cdate == $d2 then "  \n  - **Started [\($asset[.assetid].title)][\(.assetid)]**" else "" end)  )),""][] )|flatten|join("\n"))  
-  ])
-  | flatten(2)
-  | join("\n\n") +"\n"' $HISTORYDATAPATH
+  ) as $asset
+  | map(
+    [
+      "## " +.month,
+      "",
+      (.dates
+      | map(
+        .date as $d2 | 
+        [
+          "* **\(.date)**" ,
+          "",
+          (.books |  map("  - " + (if $asset[.assetid].cdate == $d2 then "Started " else "" end) + "["  + $asset[.assetid].title + "][\(.assetid)] - \(.annotation_count) annotation\(if .annotation_count > 1 then "s" else "" end)")  |join("\n")),
+          ""
+        ] |flatten(2)
+      )),
+      ""
+    ]
+    | flatten
+    | join("\n")
+  )
+| join("\n")'
 
 jq -r 'sort_by(.permalink)|map("[\(.assetid)]:\t\(.permalink)")|join("\n")' $DATADIR/books.json

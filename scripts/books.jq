@@ -88,23 +88,27 @@ def chaptername($location):
   ;
 
 def format_text:
-  split("[\\n\\t]+";"x")
-  | map(select(test("[a-zA-Z]")) | gsub("^[\\t\\s]+";"";"x"))
+  split("[\\n]+";"x")
+  # | map(select(test("[a-zA-Z]")) | gsub("^[\\t\\s]+";"";"x"))
+  | map(select(test("[a-zA-Z]")))
   | join("\n")
-  | gsub("[\\s\\t]+$";"";"x")
-  | gsub("\\s\\n(?<x>[a-xA-Z])"; " "+ .x)
+  | gsub("[ ]{2,}";" ";"x")
+  # | gsub("\\s\\n(?<x>[a-xA-Z])"; " "+ .x)
   | gsub("[\\n]{2,}";"\n\n";"x")
-  | gsub("(?<f>[a-z])\\n(?<s>[a-z])";.f + " " + .s;"x")
+  # | gsub("(?<f>[a-z])\\n(?<s>[a-z])";.f + " " + .s;"x")
   ;
 
 
-def format_paragraph($text):
-  $text
-  | unsmart
-  | gsub("[\\s\\t]{2,}"; " ";"x")
+def format_paragraph:
+  # unsmart| 
+  gsub("[ ]{2,}"; " ";"x")
   | gsub("[\\n]+","  \\n";"x")
-  | gsub("(?<a>[^\\n]{60,72}) "; .a + "\n"; "m")
+  | gsub("(?<a>[^\\n]{60,72}) "; .a + "\n")
 ;
+
+def format_paragraph($txt): $txt| format_paragraph;
+
+
 
 def wrap_text($text;$id):
   $text

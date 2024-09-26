@@ -21,7 +21,7 @@ scripts: ["scripts/book.js"]
   </div>
   <hr>
   <section class="d-flex gap-3">
-    <div class="chapters d-flex flex-column gap-3">
+    <div class="chapters d-flex flex-column gap-3 flex-grow-1">
     {%- for chapter in chapters %}
     {%- assign sortedchapteritems = chapter.items | sort: "cfi" %}
       <h3 class="h4" id="{{chapter.name | slugify: 'latin'}}">{{chapter.name|replace:'#',''|strip}}</h3>

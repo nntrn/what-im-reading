@@ -6,7 +6,7 @@
   {%- for book in books %}
     <li class="text-muted">
     {%- if book.slug == page.slug %}
-      <u>{{book.title}}</u>
+      <u class="fw-bold text-dark">{{book.title}}</u>
     {%- else %}
       <a title="{{book.count}} bookmark{%- if book.count > 1 -%}s{%- endif-%}" href="{{book.permalink|relative_url}}">{{book.title}}</a>
     {%- endif -%}

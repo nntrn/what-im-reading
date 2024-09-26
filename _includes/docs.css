@@ -16,3 +16,4 @@ q:before{content:""}
 .muted{color:#a9a9a9}
 .sans-serif{font-family:var(--bs-font-sans-serif)}
 a{text-decoration-skip-ink:none}
+.pre{white-space:pre}

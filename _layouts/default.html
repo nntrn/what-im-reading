@@ -27,10 +27,6 @@
   <meta name="twitter:description" content="{{ page.description | default: site.description }}">
   <link rel="stylesheet" href="{{'/assets/vendor/bootstrap.css'|relative_url}}">
   <link rel="stylesheet" href="{{'/assets/minimal.css'|relative_url}}">
-  <style>
-  #btn-top{display:block;position:fixed;right:1rem;top:1rem;color:#aaa}
-  #btn-top:hover{background:#eee}
-  </style>
 </head>
 <body data-layout="{{site.font_family}}">
 <div class="container" id="ttop">
@@ -45,10 +41,9 @@
   </header>
   <main id="top">
   {{ content }}
-  <div class="py-1 text-end"><a href="#top">[TOP]</a></div>
   <footer class="d-flex flex-column gap-3 py-4">
     <hr>
-    <div class="d-flex flex-wrap justify-content-between align-content-center align-items-center">
+    <div class="d-flex flex-wrap justify-content-between align-content-center align-items-center gap-2">
       <div>
       Created by <a href="https://github.com/{{site.repository}}">@{{site.github_username}}</a>. 
       Copyright {{ site.time | date: '%Y' }}
@@ -62,11 +57,6 @@
       </div>
     </div>
   </footer>
-  <a id="btn-top" href="#ttop">
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 16 16" fill="currentColor">
-      <path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm8.5 9.5a.5.5 0 0 1-1 0V5.7L5.4 8a.5.5 0 1 1-.8-.8l3-3a.5.5 0 0 1 .8 0l3 3a.5.5 0 0 1-.8.8L8.5 5.7z"/>
-    </svg>
-  </a>
   </main>
 </div>
 <script>

@@ -18,7 +18,7 @@ permalink: /feed
   {%- assign statcount = site.data.stats.bookmarks_per_month[books.name]  %}
   <tr data-genre="{{book.tags}}" data-created="{{book.created}}" data-author="{{book.author}}" data-count="{{book.count}}">
     <th data-level="2" class="pb-3">
-      <time>{{book.created|date: '%F'}}</time><br><a class="small muted text-decoration-none fw-normal sans-serif" href="{{book.tags}}">{{book.tags}}</a>
+      <time class="pre">{{book.created|date: '%F'}}</time><br><a class="small muted text-decoration-none fw-normal sans-serif" href="{{book.tags}}">{{book.tags}}</a>
     </th>
     <td class="pb-3">
       <h4 class="h6"><a href="./{{book.tags}}/{{book.slug}}.html">{{book.title}}</a></h4>

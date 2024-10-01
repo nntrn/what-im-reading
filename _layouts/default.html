@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <title>{{page.title|default:"✨"}} | {{site.title}}</title>
+  <link rel="canonical" href="{{ page.url | absolute_url }}" />
+  <link rel="icon" href="{{site.favicon_ico|relative_url}}" type="image/x-icon">
+  <meta name="description" content="{{site.description}}" />
+  <meta name="author" content="{{site.author}} (@{{site.github_username}})">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="{{site.theme_color}}"/>
+  <meta name="format-detection" content="telephone=no">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta property="og:site_name" content="{{ site.title }}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ page.url | absolute_url }}">
+  <meta property="og:title" content="{{ page.title | default: site.title }}">
+  <meta property="og:description" content="{{ page.description | default: site.description }}">
+  <meta name="twitter:site" content="{{ site.title }}">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="{{ site.url | absolute_url }}">
+  <meta name="twitter:title" content="{{ page.title | default: site.title }}">
+  <meta name="twitter:description" content="{{ page.description | default: site.description }}">
+  <link rel="stylesheet" href="{{'/assets/vendor/bootstrap.css'|relative_url}}">
+  <link rel="stylesheet" href="{{'/assets/style.css'|relative_url}}">
+</head>
+<body data-layout="{{site.font_family}}">
+<div class="container">
+  <header class="my-2 d-flex flex-column gap-2">
+    <div class="d-flex justify-content-between align-items-baseline">
+      <h1 class="h1 site-title"><a href="{{ '/' | relative_url }}">{{site.title}}</a></h1>
+      <div class="d-flex gap-2 smaller">
+      {%- for link in site.links %}
+        <a href="{{ site.baseurl }}/{{link}}">{{link}}</a>
+      {%- endfor %}
+        <a href="https://github.com/{{site.repository}}">github</a>
+      </div>      
+    </div>
+    {%- if page.title -%}<p class="breadcrumb small">{%- include breadcrumb.html -%}</p>{%- endif -%}
+  </header>
+  <main id="top">
+  {{ content }}
+  </main>
+  <footer class="d-flex flex-column gap-3 py-4">
+  <hr>
+  <div class="d-flex flex-wrap justify-content-between align-content-center align-items-center gap-3 smaller">
+    <div>
+    Created by <a href="https://github.com/{{site.repository}}">@{{site.github_username}}</a>. 
+    Copyright {{ site.time | date: '%Y' }}
+    </div>
+    <div class="align-content-center align-items-center">
+      <select class="form-select form-select-sm" style="font-size:inherit" id="theme" onclick="setTheme(this.value)">
+      {%- for font in site.fonts %}
+      <option name="{{font}}" value="{{font}}"{%- if site.font_family == font %} selected{%- endif -%}>{{font}}</option>
+      {%- endfor %}
+      </select>
+    </div>
+  </div>
+  </footer>
+</div>
+<script>
+{% include script.js %}
+</script>
+</body>
+</html>

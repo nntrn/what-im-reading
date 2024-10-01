@@ -1,0 +1,21 @@
+---
+title: activity
+layout: default
+permalink: /activity
+---
+<style>
+main{font-size:12px;line-height:1.15}
+main>ul{list-style:none;display:flex;flex-direction:column;gap:1rem;list-style-type:disc}
+li ul strong{font-weight:500}
+li a {text-decoration:none;}
+li p strong{color:#000;font-weight:700;font-size:.95rem}
+li p{margin:0 0;padding-bottom:.25rem}
+
+main h2{font-size:1.4rem;margin-right:10%;border-bottom:2px dotted gray;margin:2rem 0}
+main h1{font-size:1.75rem;}
+em.started{color:var(--bs-red);font-style:normal}
+em.started:before{content:"**"}
+</style>
+
+{%- capture activity -%}{% include activity.txt -%}{% endcapture %}
+{{ activity|markdownify|replace: "***",'<em class="started"></em>' }}

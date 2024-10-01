@@ -1,0 +1,10 @@
+{%- assign crumbs = page.url | split: '/'  -%}
+{%- for crumb in crumbs -%}
+  {%- if forloop.last -%}
+  <span>&#47;{{crumb}}</strong>
+  {% elsif forloop.first %}
+  <a href="{{ '/' | relative_url}}">home</a>
+  {%- else -%}
+  <span>&#47;</span><a href="{{crumb|relative_url}}">{{crumb}}</a>
+  {%- endif -%}
+{%- endfor -%}

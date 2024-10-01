@@ -1,0 +1,12 @@
+---
+---
+{%- assign activity = site.data.activity | where: 'assetid', page.assetid  | sort: "rangestart" | sort: "id" -%}
+{%- assign info = site.data.books | where: 'assetid', page.assetid |first -%}
+
+{
+  "assetid": "{{info.assetid}}",
+  "title": "{{info.title}}",
+  "author": "{{info.author}}",
+  "genre": "{{info.tags}}",
+  "activity": {{activity|jsonify}}
+}

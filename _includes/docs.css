@@ -1,0 +1,41 @@
+html{line-height:1.1;-webkit-text-size-adjust:100%;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}
+dialog{padding:0}
+textarea{resize:vertical}
+input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}
+html{height:100%;font-feature-settings:"cv02","cv03","cv04","cv11"}
+body{min-height:100%}
+abbr[title]{text-decoration:none}
+body{--bs-heading-color:var(--bs-gray-dark);color:#555}
+aside{border-top:dotted 2px gray;padding-top:2rem;font-size:var(--aside-font-size)}
+h3,h4,h5{margin:0 0}
+h1 a{text-decoration-skip-ink:all}
+.h2>a:hover,.h3>a:hover,.h4>a:hover,.h5>a:hover{font-style:oblique;transition:font-style .15s ease-in-out}
+q:after{content:""}
+q:before{content:""}
+a{color:var(--bs-success)}
+a:hover{color:#222}
+.bookmark q{white-space:pre-line;text-align:justify}
+.clamp{display:-webkit-box!important;-webkit-line-clamp:var(--clamp-lines,1);-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis}
+.gap{gap:var(--gap)}
+.site-title a{font-size:1.75rem}
+.site-title{margin-bottom:1rem}
+.bigger{font-size:1.2em}
+.smaller{font-size:smaller}
+.toc{max-height:min(300px,40vh);position:sticky;top:1rem;font-size:.9rem;z-index:1;width:20px;max-width:20px}
+.toc a{display:block;text-decoration:none;font-weight:400;white-space:pre;padding:0 4px;line-height:1;color:#222}
+.toc a:hover{text-decoration:none;background:#eee}
+.toc a:hover:after{text-decoration:none;border:0;content:attr(title);position:absolute;right:1.5rem;color:#fff;background:#222;padding:2px 4px;z-index:1;font-size:.8rem}
+.mark q{background:var(--bs-highlight-bg)}
+.muted{color:#656d76}
+.gray{color:#aaa}
+.sans-serif{font-family:var(--bs-font-sans-serif)}
+.serif{font-family:var(--bs-font-serif)}
+.pre{white-space:pre}
+.letter-spacing-1{letter-spacing:1px}
+table{border-collapse:separate}
+.small>a{text-decoration:none}
+.tag-text{color:gray;font-weight:400;font-size:.8rem;text-decoration:none;line-height:1.5}
+.compact [data-level="2"]{display:none}
+.chapters{gap:2rem!important}
+.chapters ul{gap:var(--list-gap)}
+.link-primary:hover{color:var(--bs-dark)!important;text-decoration-color:inherit!important}

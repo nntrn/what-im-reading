@@ -1,0 +1,54 @@
+title: what i'm reading
+description: saved excerpts of things
+author: Annie Tran
+url: https://nntrn.github.io
+baseurl: /what-im-reading
+repository: nntrn/what-im-reading
+github_username: nntrn
+favicon_ico: /assets/favicon.ico
+theme_color: "#34e045"
+font_family: monospace
+fonts: ["monospace", "serif", "sans-serif"]
+
+kramdown:
+  smart_quotes: ["apos", "apos", "quot", "quot"]
+
+compress_html:
+  clippings: [div, p, ul, td, h1, h2]
+  endings: all
+  comments: ["<!--", "-->"]
+  startings: []
+  blanklines: true
+  profile: false
+
+links: ["activity", "feed"]
+
+page_gen:
+  - data: "genres"
+    template: "genre"
+    index_files: true
+    dir: "tag"
+
+  - data: "books"
+    template: "book"
+    name: "slug"
+    index_files: false
+    dir: "tags"
+
+  - data: "books"
+    template: "api"
+    name: "assetid"
+    index_files: false
+    dir: "api"
+    extension: ".json"
+
+include:
+  - _pages
+
+exclude:
+  - README.md
+  - Gemfile.lock
+  - .archive
+  - annotations.json
+  - scripts
+  - .github

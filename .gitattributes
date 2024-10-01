@@ -1,0 +1,7 @@
+* text=auto
+
+*.html linguist-language=liquid
+*.css linguist-detectable=false
+*.js linguist-detectable=false
+
+assets/* linguist-detectable=false

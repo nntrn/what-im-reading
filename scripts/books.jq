@@ -83,24 +83,25 @@ def identify_subsection:
 
 def getnum($str): $str
   | gsub("(?<w>[^0-9])(?<n>[0-9]+)";.w + " " + .n)
-  | [match("(\\b[0-9]+)";"g").string|tonumber]|last|tostring;
+  | [match("(\\b[0-9]+)";"g").string|tonumber]|first|tostring;
 
 def format_chapter:
   ([.]|flatten|unique) as $input
   | ($input | join(" ")
-  | gsub("x?[0-9]{8,}"; .n; "x")) as $str
+  | gsub("x?[0-9 ]{8,}"; ""; "x")) as $str
   | $str | 
-  if test("[cC][chapter]{1,}") or test("^[cC].*([0-9]+)") then  "Chapter " + getnum($str) 
+  if test("[cC][chapter]{1,}";"i") then  "Chapter " + getnum($input|map(select("^[cChapter]{2,}"))|first)
   elif test("toc_marker") then getnum($str)
   else 
     $str 
     | gsub("(epub|EPUB|[[:punct:]]?xhtml|html|ji[0-9]+|sup[0-9]+|nav_|div[0-9]+)"; "")
     | gsub("^[^a-zA-Z0-9]+";"")
+    # | if ($input[0]| test("^[cC][chapter]{1,}")) then  "Chapter " + getnum($str) 
   end
   ;
 
 def format_location:
   [match("\\[([^\\]]+)\\]+";"g").captures[].string] as $raw 
   | ($raw|join(" ")|identify_subsection) as $sec
-  | (if $sec then $sec  else ($raw|format_chapter) end)
+  | (if $sec then $sec  else ($raw|first|format_chapter) end)
   ;

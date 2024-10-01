@@ -28,6 +28,7 @@ a:hover{color:#222}
 .mark q{background:var(--bs-highlight-bg)}
 .muted{color:#656d76}
 .gray{color:#aaa}
+.accent{color:rgba(var(--bs-primary-rgb),.5)}
 .sans-serif{font-family:var(--bs-font-sans-serif)}
 .serif{font-family:var(--bs-font-serif)}
 .pre{white-space:pre}

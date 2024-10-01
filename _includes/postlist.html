@@ -8,7 +8,7 @@
     {%- if book.slug == page.slug %}
       <u class="h6 text-success">{{book.title}}</u>
     {%- else %}
-      <a class="h6" title="{{book.count}} bookmark{%- if book.count > 1 -%}s{%- endif-%}" href="{{book.permalink|relative_url}}">{{book.title}}</a>
+      <a class="h6" title="{{book.count}} bookmark{%- if book.count > 1 -%}s{%- endif-%}" href="{{book.url|relative_url}}">{{book.title}}</a>
     {%- endif %}
       <span>by {{book.author}} / <span class="gray">{{book.count}}</span></span>
     </li>

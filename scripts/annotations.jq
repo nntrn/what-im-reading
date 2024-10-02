@@ -33,7 +33,7 @@ def create_activity_data:
       text: (.ZANNOTATIONSELECTEDTEXT|unsmart|remove_cites|format_quotes|join("\n")),
       created: .ZANNOTATIONCREATIONDATE,
       location: .ZANNOTATIONLOCATION,
-      cfi: (.ZANNOTATIONLOCATION|[match("\\b[0-9]{1,4}\\b";"g").string|tonumber]|join(".")),
+      cfi: (.ZANNOTATIONLOCATION|[match("\\b[0-9]{1,4}\\b";"g").string|tonumber|lpad(3)]|join(".")),
       chapter: (if ((.ZFUTUREPROOFING5|length)>0) then .ZFUTUREPROOFING5 else (.ZANNOTATIONLOCATION|format_location)? // .rangestart end),
       rangestart: .ZPLLOCATIONRANGESTART
   }) | sort_by(.id);
@@ -138,7 +138,7 @@ def stats_history_text:
           ), ""
       ]), 
       # create link reference from _data/books.json
-      ($books[]|sort_by(.permalink)|map("[\(.assetid)]:\t\(.permalink)"))
+      ($books[]|sort_by(.url)|map("[\(.assetid)]:\t\(.url)"))
     ] 
     | flatten | join("\n") )
   else  

@@ -9,11 +9,13 @@ body{--bs-heading-color:var(--bs-gray-dark);color:#555}
 aside{border-top:dotted 2px gray;padding-top:2rem;font-size:var(--aside-font-size)}
 h3,h4,h5{margin:0 0}
 h1 a{text-decoration-skip-ink:all}
+a.h5:hover,a.h6:hover{color:var(--bs-link-color)}
 .h2>a:hover,.h3>a:hover,.h4>a:hover,.h5>a:hover{font-style:oblique;transition:font-style .15s ease-in-out}
 q:after{content:""}
 q:before{content:""}
 a{color:var(--bs-success)}
 a:hover{color:#222}
+.breadcrumb{margin-bottom:0;font-family:var(--bs-font-monospace)!important;font-size:.85em}
 .bookmark q{white-space:pre-line;text-align:justify}
 .clamp{display:-webkit-box!important;-webkit-line-clamp:var(--clamp-lines,1);-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis}
 .gap{gap:var(--gap)}

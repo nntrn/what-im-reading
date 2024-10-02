@@ -6,7 +6,7 @@ SCRIPT="$(realpath "$0")"
 DIR=${SCRIPT%/*/*}
 _scriptdir=${SCRIPT%/*}
 
-DEFAULT_REMOTE_URL="https://raw.githubusercontent.com/nntrn/bookstand/assets/annotations.json"
+DEFAULT_REMOTE_URL="https://nntrn.github.io/store/annotations.json"
 DEFAULT_ANNOTATIONS_FILE=annotations.json
 
 export OUTDIR=$DIR
@@ -64,44 +64,38 @@ done
 
 export DATADIR=$OUTDIR/_data
 
-_main() {
+if [[ ! -f $ANNOTATIONS_FILE ]] ||
+  [[ ! -s $ANNOTATIONS_FILE ]] ||
+  [[ $FETCH_REMOTE -eq 1 ]]; then
 
-  if [[ ! -f $ANNOTATIONS_FILE ]] ||
-    [[ ! -s $ANNOTATIONS_FILE ]] ||
-    [[ $FETCH_REMOTE -eq 1 ]]; then
+  get_annotations &
+  wait %1
+fi
 
-    get_annotations &
-    wait %1
-  fi
-
-  if [[ -n $RUN_ONLY ]]; then
-    if [[ $RUN_ONLY == "stat_"* ]]; then
-      jq_from_activity $RUN_ONLY
-    else
-      jq_from_annotations $RUN_ONLY
-    fi
+if [[ -n $RUN_ONLY ]]; then
+  if [[ $RUN_ONLY == "stat_"* ]]; then
+    jq_from_activity $RUN_ONLY
   else
-
-    mkdir -p $OUTDIR/{_data/stats,_pages}
-
-    jq_from_annotations create_book_data >$DATADIR/books.json &
-    jq_from_annotations create_genre_data >$DATADIR/genres.json &
-    jq_from_annotations create_activity_data >$DATADIR/activity.json &
-    # jq_from_annotations create_word_data >$DATADIR/words.json &
-    wait %3
-
-    jq_from_activity stats_bookmarks_per_month >$DATADIR/stats/bookmarks_per_month.json &
-    jq_from_activity stats_month >$DATADIR/stats/month.json &
-    jq_from_activity stats_history >$DATADIR/history.json &
-    wait %3
-
-    _log "* Creating _pages/activity.txt"
-    jq -r -L $_scriptdir \
-      --slurpfile books $DATADIR/books.json \
-      'include "annotations"; stats_history_text' $DATADIR/history.json 1>$OUTDIR/_includes/activity.txt &
-    wait %1
-
+    jq_from_annotations $RUN_ONLY
   fi
-}
+else
 
-_main
+  mkdir -p $OUTDIR/{_data/stats,_pages}
+
+  jq_from_annotations create_book_data >$DATADIR/books.json &
+  jq_from_annotations create_genre_data >$DATADIR/genres.json &
+  jq_from_annotations create_activity_data >$DATADIR/activity.json &
+  # jq_from_annotations create_word_data >$DATADIR/words.json &
+  wait %3
+
+  jq_from_activity stats_bookmarks_per_month >$DATADIR/stats/bookmarks_per_month.json &
+  jq_from_activity stats_month >$DATADIR/stats/month.json &
+  jq_from_activity stats_history >$DATADIR/history.json &
+  wait %3
+
+  _log "* Creating _pages/activity.txt"
+
+  jq -r -L $_scriptdir --slurpfile books $DATADIR/books.json 'include "annotations"; stats_history_text' \
+    $DATADIR/history.json >$OUTDIR/_includes/activity.txt
+
+fi

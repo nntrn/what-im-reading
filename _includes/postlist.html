@@ -4,7 +4,7 @@
   <h5>Other posts in <a class="fs-6 smaller letter-spacing-1" href="{{pagetag|relative_url}}">{{pagetag|upcase}}</a></h5>
   <ul class="d-flex flex-column gap-2 my-3 lh-sm">
   {%- for book in books %}
-    <li class="text-muted">
+    <li class="text-muted clamp">
     {%- if book.slug == page.slug %}
       <u class="h6 text-success">{{book.title}}</u>
     {%- else %}

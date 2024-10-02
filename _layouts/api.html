@@ -4,9 +4,9 @@
 {%- assign info = site.data.books | where: 'assetid', page.assetid |first -%}
 
 {
-  "assetid": "{{info.assetid}}",
-  "title": "{{info.title}}",
-  "author": "{{info.author}}",
+  "assetid": {{info.assetid}},
+  "title": {{info.title|jsonify}},
+  "author": {{info.author|jsonify}},
   "genre": "{{info.tags}}",
   "url": "{{info.url}}",
   "activity": {{activity|jsonify}}

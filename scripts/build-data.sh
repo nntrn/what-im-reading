@@ -93,9 +93,11 @@ else
   jq_from_activity stats_history >$DATADIR/history.json &
   wait %3
 
-  _log "* Creating _pages/activity.txt"
+  # _log "* Creating _includes/activity.txt"
 
-  jq -r -L $_scriptdir --slurpfile books $DATADIR/books.json 'include "annotations"; stats_history_text' \
-    $DATADIR/history.json >$OUTDIR/_includes/activity.txt
+#   jq -r -L $_scriptdir --slurpfile books $DATADIR/books.json 'include "annotations"; stats_history_text' \
+#     $DATADIR/history.json >$OUTDIR/_pages/activity.txt
+#
+#   cat $OUTDIR/_pages/activity.txt >$OUTDIR/_includes/activity.txt
 
 fi

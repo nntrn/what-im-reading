@@ -34,6 +34,9 @@ jobs:
         with:
           ref: ${{ inputs.ref || github.event.client_payload.ref || env.GITHUB_REF_NAME }}
       - run: ./scripts/build-data.sh --remote
+      # - run: head -n 20 ./_includes/activity.txt
+      - run: |
+          jq -r -L scripts --slurpfile books _data/books.json 'include "annotations"; stats_history_text' _data/history.json >  ./_includes/activity.txt
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.2

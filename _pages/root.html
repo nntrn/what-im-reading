@@ -3,13 +3,16 @@ layout: default
 permalink: /
 ---
 <style>
+body{font-size:14px}
 .column-container{margin:auto;column-width:max(250px,20vw);column-fill:balance;gap:3rem;column-count:1}
 .column-group{page-break-inside:avoid;margin-bottom:1rem}
 .column-group:nth-child(2n) .jump-top{display:none!important}
-h2{border-bottom:2px solid currentColor}
-h2>a{color:#222;text-decoration:none;font-weight:700}
+.column-container h2{margin:0 0}
+h2{border-bottom:2px solid #222}
+h2>a{color:#222;text-decoration:none;font-weight:700;font-size: 1rem;text-transform: uppercase;font-family: var(--font-sans-serif);}
+a.h6{font-weight:bold}
 @media (min-width:650px){ .column-container{column-count:2} .jump-top{display:none}}
-@media (min-width:950px){ .column-container{column-count:3} }
+@media (min-width:950px){ .column-container{column-count:3;column-width:unset} }
 .jump-top a{color: #ccc;font-size:.85rem}
 .jump-top {margin-right:1rem}
 ol li{padding-left:.25rem}
@@ -19,7 +22,7 @@ ol li{padding-left:.25rem}
 {%- for genre in genres %}
   <div class="column-group">
     <h2 id="{{genre.tag}}" class="h5 text-uppercase border-bottom border-2  border-black"><a href="{{ site.baseurl }}/{{genre.tag}}">{{genre.tag|replace: "-"," "}}</a></h2>
-    <ol class="d-flex flex-column gap-3 py-2 mx-2" data-tag="{{genre.name}}">
+    <ol class="book-list" data-tag="{{genre.name}}">
     {%- assign books = genre.books %}
     {%- for book in books %}
       {%- assign bookmodified = book.modified | date: "%b %Y" -%}

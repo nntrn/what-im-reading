@@ -8,31 +8,31 @@ scripts: ["scripts/book.js"]
 {%- assign annotations = site.data.activity | where: 'assetid', page.assetid  | sort: "rangestart" | sort: "cfi" -%}
 {%- assign chapters = annotations| sort: "rangestart" | group_by: "chapter" -%}
 
-<article class="content d-flex flex-column gap-2">
-  <h2 class="my-0">{{page.title}}</h2>
-  <h3 class="h5">{{page.author}}</h3>
-  <div class="d-flex flex-sm-wrap gap-1">
+<article class="content">
+  <h2 data-label="title">{{page.title}}</h2>
+  <h3 data-label="author" class="semibold">{{page.author}}</h3>
+  <div class="info">
     <span>{{annotations.size}} annotation{% if annotations.size > 1 %}s{%- endif -%}</span>
-    <span class="accent">&bull;</span>
-    <span><span title="Created">{{pagecreated}}</span>{%- if pagemodified != pagecreated -%}&nbsp;&ndash;&nbsp;<span title="Modified">{{pagemodified}}</span>{%- endif %}</span>
-    <span class="accent">&bull;</span>
-    <a class="muted" href="{{site.baseurl}}/api/{{page.assetid}}.json">data</a>
+    <span>&bull;</span>
+    <span><span data-label="Created">{{pagecreated}}</span>{%- if pagemodified != pagecreated -%}&nbsp;&ndash;&nbsp;<span data-label="Modified">{{pagemodified}}</span>{%- endif %}</span>
+    <span >&bull;</span>
+    <a href="{{site.baseurl}}/api/{{page.assetid}}.json">data</a>
   </div>
   <hr>
-  <section class="d-flex gap-sm-3 gap-lg-5">
-    <div class="chapters d-flex flex-column gap-3 flex-grow-1">
+  <section class="row">
+    <div class="chapters">
     {%- for chapter in chapters %}
     {%- assign sortedchapteritems = chapter.items | sort: "cfi" %}
-      <h3 class="h4" id="{{chapter.name | slugify: 'latin'}}">{{chapter.name|replace:'#',''|strip}}</h3>
-      <ul class="d-flex flex-column" style="--gap:5px">
+      <h3 id="{{chapter.name | slugify: 'latin'}}">{{chapter.name|replace:'#',''|strip}}</h3>
+      <ul class="annotation-list" style="--gap:5px">
         {%- for annotation in sortedchapteritems %}
-        <li id="{{annotation.id}}" class="bookmark px-3">
+        <li id="{{annotation.id}}" class="bookmark">
           <q>{{ annotation.text }}</q>
-          <div aria-hidden="true" class="small d-flex text-uppercase gap mt-2">
+          <small class="timestamp" aria-hidden="true" >
             <a href="#{{annotation.id}}">#{{annotation.id}}</a>
             <span>&bull;</span>
-            <time class="muted">{{annotation.created|date:'%b %-d %Y %-I:%M%p'}}</time>
-          </div>
+            <time>{{annotation.created|date:'%b %-d %Y %-I:%M%p'}}</time>
+          </small>
         </li>
         {%- endfor %}
       </ul>

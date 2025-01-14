@@ -18,7 +18,7 @@ module Jekyll
   class DataPage < Page
     include Sanitizer
 
-    def initialize(site, base, index_files, dir, page_data_prefix, data, name, name_expr, title, title_expr, template, extension, debug, prefix)
+    def initialize(site, base, index_files, dir, page_data_prefix, data, name, name_expr, title, title_expr, template, extension, debug)
       @site = site
       @base = base
 
@@ -39,9 +39,7 @@ module Jekyll
       end
 
       filename = sanitize_filename(raw_filename).to_s
-      dirname = (data[dir] ? data[dir] : dir)
-
-      @dir =  "#{prefix}/#{dirname}"
+      @dir = (data[dir] ? data[dir] : dir)
       @name = (index_files ? "index" : filename) + "." + extension.to_s
 
       self.process(@name)
@@ -78,7 +76,7 @@ module Jekyll
       if data
         data.each do |data_spec|
           index_files_for_this_data = data_spec['index_files'] != nil ? data_spec['index_files'] : index_files
-          template         = data_spec['template']|| data_spec['data']
+          template         = data_spec['template'] || data_spec['data']
           name             = data_spec['name']
           name_expr        = data_spec['name_expr']
           title            = data_spec['title']
@@ -87,7 +85,6 @@ module Jekyll
           extension        = data_spec['extension'] || "html"
           page_data_prefix = data_spec['page_data_prefix']
           debug            = data_spec['debug']
-          prefix           = data_spec['prefix']
           
           if not site.layouts.key? template
             puts "error (datapage-gen). could not find template #{template}. Skipping dataset #{name}."
@@ -109,7 +106,7 @@ module Jekyll
             records = records.select { |record| eval(data_spec['filter_condition']) } if data_spec['filter_condition']
 
             records.uniq.each do |record|
-              site.pages << DataPage.new(site, site.source, index_files_for_this_data, dir, page_data_prefix, record, name, name_expr, title, title_expr, template, extension, debug, prefix)
+              site.pages << DataPage.new(site, site.source, index_files_for_this_data, dir, page_data_prefix, record, name, name_expr, title, title_expr, template, extension, debug)
             end
           end
         end
@@ -117,14 +114,14 @@ module Jekyll
     end
   end
 
-#   module DataPageLinkGenerator
-#     include Sanitizer
-# 
-#     def datapage_url(input, dir)
-#       extension = @context.registers[:site].config['page_gen-dirs'] ? '.pug' : '.html'
-#     end
-#   end
+  module DataPageLinkGenerator
+    include Sanitizer
+
+    def datapage_url(input, dir)
+      extension = @context.registers[:site].config['page_gen-dirs'] ? '.pug' : '.html'
+    end
+  end
 
 end
 
-# Liquid::Template.register_filter(Jekyll::DataPageLinkGenerator)
+Liquid::Template.register_filter(Jekyll::DataPageLinkGenerator)

@@ -1,8 +1,3 @@
-# def stopwords: {
-#   all: ["able","about","across","after","all","almost","also","among","and","any","are","because","been","but","can","cannot","could","dear","did","does","either","else","ever","every","for","from","get","got","had","has","have","her","hers","him","his","how","however","into","its","just","least","let","like","likely","may","might","most","must","neither","nor","not","off","often","only","other","our","own","rather","said","say","says","she","should","since","some","than","that","the","their","them","then","there","these","they","this","tis","too","twas","wants","was","were","what","when","where","which","while","who","whom","why","will","with","would","yet","you","your"],
-#   compact: ["able","about","across","after","almost","also","among","because","been","cannot","could","dear","does","either","else","ever","every","from","have","hers","however","into","just","least","like","likely","might","most","must","neither","often","only","other","rather","said","says","should","since","some","than","that","their","them","then","there","these","they","this","twas","wants","were","what","when","where","which","while","whom","will","with","would","your"]
-# }
-
 def squo: [39]|implode;
 def lpad(n): tostring | if (n > length) then ((n - length) * "0") + . else . end;
 def squote($text): [squo,$text,squo]|join("");
@@ -85,12 +80,19 @@ def getnum($str): $str
   | gsub("(?<w>[^0-9])(?<n>[0-9]+)";.w + " " + .n)
   | [match("(\\b[0-9]+)";"g").string|tonumber]|first|tostring;
 
+def getchapternum($str): $str
+  | [$str]|flatten|join(" ")
+  | gsub(".*(?<c>[cC][\\w\\D]+?)(?<d>[0-9]+).*";.d;"x")
+  | tonumber|tostring
+  ;
+  
 def format_chapter:
   ([.]|flatten|unique) as $input
   | ($input | join(" ")
   | gsub("x?[0-9 ]{8,}"; ""; "x")) as $str
   | $str | 
-  if test("[cC][chapter]{1,}";"i") then  "Chapter " + getnum($input|map(select("^[cChapter]{2,}"))|first)
+  # if test("[cC][chapter]{1,}";"i") then  "Chapter " + getnum($input|map(select("^[cChapter]{2,}"))|first)
+  if test("[chapter]{3,}|^[cC]";"i") then  "Chapter " + getchapternum($input|map(select("[chapter]{3,}|^[cC]")))
   elif test("toc_marker") then getnum($str)
   else 
     $str 

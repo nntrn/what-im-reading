@@ -3,6 +3,12 @@ title: feed
 layout: default
 permalink: /feed
 ---
+<style>
+th{text-align:left;font-weight: 500;font-size: .8em;}
+body{font-size:14px}
+td,th{padding:0 0;margin:0 0;line-height:0 0}
+table,td{border-collapse: separate;border-spacing: 0 1rem;}
+</style>
 {% assign books_by_date = site.data.books|sort:'created'|reverse|group_by_exp:"item","item.created|date: '%b %Y'" -%}
 <section class="books">
   <button class="btn btn-outline-success" onclick="this.nextElementSibling.classList.toggle('compact')">Toggle compact</button>

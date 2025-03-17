@@ -1,20 +1,22 @@
 ---
 layout: default
-permalink: /
+permalink: /toc
 ---
 <style>
-body{font-size:14px}
+.container{flex-direction: column}
 .column-container{margin:auto;column-width:max(250px,20vw);column-fill:balance;gap:3rem;column-count:1}
 .column-group{page-break-inside:avoid;margin-bottom:1rem}
 .column-group:nth-child(2n) .jump-top{display:none!important}
 .column-container h2{margin:0 0}
 h2{border-bottom:2px solid #222}
-h2>a{color:#222;text-decoration:none;font-weight:700;font-size: 1rem;text-transform: uppercase;font-family: var(--font-sans-serif);}
+h2>a{color:#222;text-decoration:none;font-weight:700;;text-transform: uppercase;font-family: var(--font-sans-serif);}
 a.h6{font-weight:bold}
 @media (min-width:650px){ .column-container{column-count:2} .jump-top{display:none}}
 @media (min-width:950px){ .column-container{column-count:3;column-width:unset} }
-.jump-top a{color: #ccc;font-size:.85rem}
+.jump-top a{color: #ccc;}
 .jump-top {margin-right:1rem}
+ol li{padding-left:.25rem}
+ol.book-list{padding-left:2rem;display:flex;flex-direction:column;gap:.5rem}
 ol li{padding-left:.25rem}
 </style>
 {% assign genres = site.data.genres %}
@@ -27,14 +29,13 @@ ol li{padding-left:.25rem}
     {%- for book in books %}
       {%- assign bookmodified = book.modified | date: "%b %Y" -%}
       {%- assign bookcreated = book.created | date: "%b %Y" %}
-      <li class="lh-1" data-modified="{{book.modified|date: '%F' }}" data-created="{{book.created|date:'%F'}}" data-count="{{book.count}}">
-        <a class="h6 link-primary" href="{{ site.baseurl }}/{{genre.tag}}/{{book.slug}}">{{book.title}}</a>
-        <span class="clamp">{{book.author}}</span>
-        <span class="text-uppercase smaller muted">{{ bookmodified }} &bullet; {{book.count}}</span>        
+      <li data-modified="{{book.modified|date: '%F' }}" data-created="{{book.created|date:'%F'}}">
+        <a data-count="{{book.count}}" href="{{ site.baseurl }}/{{genre.tag}}/{{book.slug}}">{{book.title}}</a>
+        <br><span data-label="author">{{book.author}}</span>
       </li>
     {%- endfor %}
     </ol>
-    <div class="jump-top text-end"><a href="#top">[TOP]</a></div>
+    <div class="jump-top"><a href="#top">[TOP]</a></div>
   </div>
 {%- endfor -%}
 </div>

@@ -7,12 +7,13 @@ permalink: /feed
 th{text-align:left;font-weight: 500;font-size: .8em;}
 body{font-size:14px}
 td,th{padding:0 0;margin:0 0;line-height:0 0}
-table,td{border-collapse: separate;border-spacing: 0 1rem;}
+table,td{border-collapse:separate;border-spacing: 0 1rem;}
 </style>
+
 {% assign books_by_date = site.data.books|sort:'created'|reverse|group_by_exp:"item","item.created|date: '%b %Y'" -%}
+
 <section class="books">
-  <button class="btn btn-outline-success" onclick="this.nextElementSibling.classList.toggle('compact')">Toggle compact</button>
-  <table class="compact">
+  <table>
   {%- for books in books_by_date %}
   {%- assign list = books.items|sort:'created'|reverse %}
   <tr>
@@ -24,19 +25,19 @@ table,td{border-collapse: separate;border-spacing: 0 1rem;}
   {%- for book in list %}
   {%- assign statcount = site.data.stats.bookmarks_per_month[books.name]  %}
   <tr>
-    <th data-level="2"><div class="d-flex flex-column pb-3">
-      <time class="pre">{{book.created|date: '%F'}}</time>
-      <a class="tag-text" href="{{book.tags}}">{{book.tags}}</a>
+    <th data-level="2"><div class="flex column">
+      <div><time class="pre">{{book.created|date: '%F'}}</time></div>
+      <div><a class="tag-text" href="{{book.tags}}">{{book.tags}}</a></div>
     </div></th>
     <td class="pb-3">
       <h4 class="h6"><a href="./{{book.tags}}/{{book.slug}}.html">{{book.title}}</a></h4>
-      <div class="small">{{book.author|split: ","|first}} &bull; <span class="text-muted">{{book.count}} annotation{% if book.count > 1 %}s{%- endif -%}</span></div>
+      <div>{{book.author|split: ","|first}} &bull; <span class="text-muted">{{book.count}} annotation{% if book.count > 1 %}s{%- endif -%}</span></div>
     </td>
   </tr>
   {%- endfor %}
   <tr>
     <td data-level="2"></td>
-    <td class="pt-2 small text-muted">
+    <td>
       <span>started <strong>{{list.size}}</strong>&nbsp;book{% if list.size > 1 %}s{%- endif -%}</span>
       <span>&sol;</span>
       <span>created <strong>{{statcount}}</strong>&nbsp;bookmark{% if statcount > 1 %}s{%- endif -%}</span>

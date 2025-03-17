@@ -1,0 +1,44 @@
+--- 
+layout: default 
+permalink: / 
+inline_js: ["scripts/filter.js"] 
+inline_css: ["index.css"] 
+--- 
+
+{%- assign books = site.data.books | sort: "created" | reverse %} 
+{%- assign maxcount = site.data.books | sort: "count" | last %} 
+
+<div class="panel sb">
+  <div id="numfilter" class="flex wrap gap-1">
+    <label data-filter-limit="0"><strong>FILTER COUNT</strong></label>
+    <input type="range" id="rangefilter" min="0" max="{{maxcount.count}}" step="5" value="0" oninput="filterCount(value)" />
+  </div>
+  <div class="flex wrap gap-1">
+    <label><strong>SORT BY</strong></label>
+    <select id="sortby" class="form-select" onchange="sortElements(value)">
+      <option value="count" data-type="number">Count</option>
+      <option value="last-activity" data-type="date">Last Activity</option>
+      <option value="created" data-type="date" selected>Created</option>
+    </select>
+  </div>
+</div>
+<div class="books" data-sort="created" style="--gap:.5rem"> 
+{% for book in books %} 
+  {% assign title = book.title | replace: '"', "" | split: " (" | first | split: "," | first | split: ":" | first -%} 
+  <div class="book flex col" 
+      data-count="{{book.count}}" 
+      data-genre="{{book.tags}}" 
+      data-last-activity="{{book.modified}}" 
+      data-created="{{book.created}}">
+    <a class="book-url" href="{{ site.baseurl }}/{{book.url}}">
+      <img src="{{ site.baseurl }}/assets/covers/{{book.assetid}}.jpg" title="{{title}} by {{book.author}}" />
+      <strong>{{ title }}</strong>
+    </a>
+    <label class="clamp" style="--clamp-lines:2">{{book.author}}</label>
+    <label class="date" data-label="created">{{book.created|date:'%b %Y'}}</label>
+    <label class="date" data-label="updated">{{book.modified|date:'%b %Y'}}</label>
+    <label class="genre {{book.tags}}" title="{{book.tags}}">{{book.tags}}</label>
+    <label class="count toast">{{book.count}}<label>
+  </div> 
+{%- endfor %} 
+</div>

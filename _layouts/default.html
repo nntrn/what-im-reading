@@ -4,57 +4,62 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="UTF-8">
-  <title>{{page.title|default:"✨"}} | {{site.title}}</title>
+  <title>{{page.title|default:site.title}}</title>
   <link rel="canonical" href="{{ page.url | absolute_url }}" />
   <link rel="icon" href="{{site.favicon_ico|relative_url}}" type="image/x-icon">
   <meta name="description" content="{{site.description}}" />
-  <meta name="author" content="{{site.author}} (@{{site.github_username}})">
+  {% if page.author %}<meta name="author" content="{{page.author}}" /> {%- endif %}
+  <meta name="Compiled by" content="{{site.author}} (@{{site.github_username}})">
   <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="{{site.theme_color}}"/>
-  <meta name="format-detection" content="telephone=no">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta property="og:site_name" content="{{ site.title }}">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="{{ page.url | absolute_url }}">
-  <meta property="og:title" content="{{ page.title | default: site.title }}">
-  <meta property="og:description" content="{{ page.description | default: site.description }}">
-  <meta name="twitter:site" content="{{ site.title }}">
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:url" content="{{ site.url | absolute_url }}">
-  <meta name="twitter:title" content="{{ page.title | default: site.title }}">
-  <meta name="twitter:description" content="{{ page.description | default: site.description }}">
   <link rel="stylesheet" href="{{'/assets/style.css'|relative_url}}">
+
+  {% if page.inline_css %}
+  <style>
+  {% for css in page.inline_css -%}
+  {% include {{css}} %}
+  {%- endfor %}
+  </style>
+  {%- endif %}
 
 </head>
 
 <body>
-<div class="container">
+
   <header>
-    <div class="d-flex justify-content-between align-items-baseline flex-wrap">
-      <h1 class="h1 site-title"><a href="{{ '/' | relative_url }}">{{site.title}}</a></h1>
-      <div class="d-flex gap-2 smaller">
-      {%- for link in site.links %}
+    <div class="flex sb baseline gap-2">
+      <h1 class="site-title"><a href="{{ '/' | relative_url }}">{{site.title}}</a></h1>
+      <nav class="flex gap-2 smaller">
+        {%- for link in site.links %}
         <a href="{{ site.baseurl }}/{{link}}">{{link}}</a>
-      {%- endfor %}
+        {%- endfor %}
         <a href="https://github.com/{{site.repository}}">github</a>
-      </div>
+      </nav>
     </div>
-    {%- if page.title -%}<p class="breadcrumb small">{%- include breadcrumb.html -%}</p>{%- endif -%}
   </header>
+
   <main id="top">
-  {{ content }}
+    {%- if page.title -%}<div class="breadcrumb">{%- include breadcrumb.html -%}</div>{%- endif -%}
+    
+    <div class="content">
+      {{ content }}
+    </div>
   </main>
-  <footer class="d-flex flex-column">
+
+  <footer class="flex column">
     <div>
       Created by <a href="https://github.com/{{site.repository}}">@{{site.github_username}}</a>.
       Copyright {{ site.time | date: '%Y' }}
     </div>
   </footer>
-</div>
-<script>
-{% include scripts/book.js %}
-</script>
+
+  {% if page.inline_js %}
+  <script>
+    {% for js in page.inline_js -%}
+    {% include {{js}} %}
+
+    {%- endfor -%}
+  </script>
+  {% endif %}
+
 </body>
 </html>

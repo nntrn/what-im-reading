@@ -6,9 +6,6 @@ baseurl: /what-im-reading
 repository: nntrn/what-im-reading
 github_username: nntrn
 favicon_ico: /assets/favicon.ico
-theme_color: "#34e045"
-font_family: sans-serif
-fonts: ["monospace", "serif", "sans-serif"]
 
 kramdown:
   smart_quotes: ["apos", "apos", "quot", "quot"]
@@ -21,7 +18,7 @@ compress_html:
   blanklines: true
   profile: false
 
-links: ["activity", "feed"]
+links: ["toc", "activity"]
 
 page_gen:
   - data: "genres"

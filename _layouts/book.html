@@ -1,25 +1,24 @@
 ---
 layout: default
 type: book
-scripts: ["scripts/book.js"]
+inline_css: ["chapter.css"] 
+inline_js: ["scripts/book.js"]
 ---
 {%- assign pagecreated = page.created | date: "%b %Y" -%}
 {%- assign pagemodified = page.modified | date: "%b %Y" -%}
 {%- assign annotations = site.data.activity | where: 'assetid', page.assetid  | sort: "rangestart" | sort: "cfi" -%}
 {%- assign chapters = annotations| sort: "rangestart" | group_by: "chapter" -%}
 
-<article class="content">
+<article class="book-page">
   <h2 data-label="title">{{page.title}}</h2>
   <h3 data-label="author" class="semibold">{{page.author}}</h3>
-  <div class="info">
-    <span>{{annotations.size}} annotation{% if annotations.size > 1 %}s{%- endif -%}</span>
-    <span>&bull;</span>
-    <span><span data-label="Created">{{pagecreated}}</span>{%- if pagemodified != pagecreated -%}&nbsp;&ndash;&nbsp;<span data-label="Modified">{{pagemodified}}</span>{%- endif %}</span>
-    <span >&bull;</span>
+  <p class="info">
+    {{annotations.size}} annotation{% if annotations.size > 1 %}s{%- endif %} &bull; 
+    {{pagecreated}}{%- if pagemodified != pagecreated -%}&nbsp;&ndash;&nbsp;{{pagemodified}}{%- endif %} &bull;
     <a href="{{site.baseurl}}/api/{{page.assetid}}.json">data</a>
-  </div>
+  </p>
   <hr>
-  <section class="row">
+  <section class="flex sticky">
     <div class="chapters">
     {%- for chapter in chapters %}
     {%- assign sortedchapteritems = chapter.items | sort: "cfi" %}
@@ -28,7 +27,7 @@ scripts: ["scripts/book.js"]
         {%- for annotation in sortedchapteritems %}
         <li id="{{annotation.id}}" class="bookmark">
           <q>{{ annotation.text }}</q>
-          <small class="timestamp" aria-hidden="true" >
+          <small class="timestamp" aria-hidden="true">
             <a href="#{{annotation.id}}">#{{annotation.id}}</a>
             <span>&bull;</span>
             <time>{{annotation.created|date:'%b %-d %Y %-I:%M%p'}}</time>
@@ -37,12 +36,22 @@ scripts: ["scripts/book.js"]
         {%- endfor %}
       </ul>
     {%- endfor %}
+
+    {%- include postlist.html %}
+    
     </div>
-    <nav class="toc" tab-index="-1">
-    {%- for chapter in chapters %}
-       <a aria-hidden="true" title="{{chapter.name|replace: '#',''|strip}}" href="#{{chapter.name | slugify: 'latin'}}">&mdash;</a>
-    {%- endfor %}
+
+    <nav class="toc" tab-index="-1" aria-hidden="true">
+      {%- for chapter in chapters %}
+         <a aria-hidden="true" title="{{chapter.name|replace: '#',''|strip}}" href="#{{chapter.name | slugify: 'latin'}}">&mdash;</a>
+      {%- endfor %}
     </nav>
+
+
+
   </section>
+
+
+
 </article>
-{%- include postlist.html %}
+

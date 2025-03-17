@@ -1,26 +1,54 @@
-
-html {
-  font-size: 14px;
-}
+html{font-size:14px}
 :root {
   --font-monospace: courier, monospace;
-  --font-sans-serif: avenir,Helvetica Neue, Helvetica, Arial, sans-serif;
+  --font-sans-serif: Helvetica Neue, Helvetica, Arial, sans-serif;
   --font-serif: times, serif;
+  --gap-unit: 0.25rem
 }
+
 body {
   font-family: var(--font-sans-serif);
   tab-size: 6;
-  line-height: unset;
+  line-height: 1.3;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-size: inherit;
+  margin: 0 auto;
+  font-size: inherit
 }
-@media (min-width: 900px) {
-  body > .container {
-    max-width: 80%;
-    margin: 0 auto;
-  }
+@media (max-width:767.98px){
+  .breadcrumb{display:none}
+  .container{padding:0}
 }
-@media (max-width: 767.98px) {
-  .breadcrumb {
-    display: none;
-  }
+@media (min-width:1000px){
+  html{font-size:15px}
+  .container{max-width:80%;margin:auto}
 }
+[hidden]{display:none!important}
 
+.container{padding:0 1rem;justify-content:space-between;display:flex;gap:1rem;flex-direction:column;margin:auto}
+.site-title{margin:0;margin-bottom:.5rem!important;padding:0!important;font-size:1.4rem}
+.sb{justify-content:space-between}
+.baseline{align-items:baseline}
+.gap{gap:var(--gap,1rem)}
+.clamp{display:-webkit-box!important;-webkit-line-clamp:var(--clamp-lines,1);-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis}
+.flex{display:flex}
+.col{flex-direction:column}
+label{font-size:.85rem}
+hr{border:0;border-bottom:1px solid #ccc}
+a{text-decoration-thickness:1.25px;text-decoration-skip-ink:none;font-weight:600}
+h4{font-size:inherit;margin:.25rem 0}
+a{color:#0969da}
+ul p{margin:0}
+body,h1,h2,h3{margin-top:0;margin-bottom:0;padding-top:0;padding-bottom:0}
+footer,header,main>*{padding-left:1rem;padding-right:1rem}
+header{border-bottom:1px solid #ccc;padding-bottom:1rem;padding-top:1rem}
+footer{padding:2rem 0;font-size:.9rem;border-top:1px solid #ddd;margin-top:1rem}
+.breadcrumb{margin-top:1rem}
+.panel{top:5.5rem;z-index:999}
+.gap-1{gap:calc(var(--gap-unit) * 1)}
+.gap-2{gap:calc(var(--gap-unit) * 2)}
+.gap-3{gap:calc(var(--gap-unit) * 3)}
+.sticky{position:sticky;top:0}
+.content {padding-top:1rem}

@@ -1,16 +1,10 @@
 {%- assign pagetag = page.tags  %}
 {%- assign books = site.data.books | where: 'tags', pagetag |sort: 'title' %}
 <aside class="my-3">
-  <h5>Other posts in <a href="{{pagetag|relative_url}}">{{pagetag|upcase}}</a></h5>
+  <h4>Other posts in <a href="{{pagetag|relative_url}}">{{pagetag|upcase}}</a></h4>
   <ul class="post-list">
   {%- for book in books %}
-    <li>
-      <span class="">
-      {%- if book.slug == page.slug %} <strong>{{book.title}}</strong>
-      {%- else %} <a class="h6" href="{{book.url|relative_url}}">{{book.title}}</a>
-      {%- endif %} <span>by {{book.author}} <span class="gray">&nbsp;/&nbsp;</span> {{book.count}}</span>
-      </span>
-    </li>
+    <li data-count="{{book.count}}"><a href="{{book.url|relative_url}}">{{book.title}}</a> by {{book.author}}</li>
   {%- endfor %}
   </ul>
 </aside>

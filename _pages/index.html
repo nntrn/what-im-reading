@@ -30,7 +30,7 @@ inline_css: ["index.css"]
       data-genre="{{book.tags}}" 
       data-last-activity="{{book.modified}}" 
       data-created="{{book.created}}">
-    <a class="book-url" href="{{ site.baseurl }}/{{book.url}}">
+    <a class="book-url gap-2" href="{{ site.baseurl }}/{{book.url}}">
       <img src="{{ site.baseurl }}/assets/covers/{{book.assetid}}.jpg" title="{{title}} by {{book.author}}" />
       <strong>{{ title }}</strong>
     </a>

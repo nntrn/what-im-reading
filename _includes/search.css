@@ -1,0 +1,16 @@
+input:focus,select:focus{color:#aaa!important}
+input[type=range]{background:#ddd;border-radius:51px;cursor:pointer;height:6px;border-radius:51px}
+input[type=range]{-webkit-appearance:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:nonecursor:ew-resize;box-shadow:0 0 2px 0 #555;transition:background .3s ease-in-out}
+input[type=range]::-webkit-slider-runnable-track{-webkit-appearance:none;box-shadow:none;border:none;background:0 0}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;border-radius:100%;background:#fff;cursor:ew-resize;box-shadow:0 0 2px 0 #555}
+[type=range]::-moz-range-thumb{box-sizing:border-box;border:1px solid #222;width:11px;border-radius:50%;background:#fff}
+
+[data-label=updated]{display:none}
+[data-label=created]{display:none}
+[data-sort=updated] [data-label=updated]{display:block}
+[data-sort=created] [data-label=created]{display:block}
+[data-label]:before{color:var(--color-icon);font-weight:600;font-family:monospace;letter-spacing:-1px}
+
+#rangefilter{max-width:50vw}
+#numfilter:after{content:"ANNOTATIONS: " attr(data-filter-limit)}

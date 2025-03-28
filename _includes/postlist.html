@@ -1,6 +1,6 @@
 {%- assign pagetag = page.tags  %}
 {%- assign books = site.data.books | where: 'tags', pagetag |sort: 'title' %}
-<aside class="my-3">
+<aside class="my-3 flex col gap">
   <h4>Other posts in <a href="{{pagetag|relative_url}}">{{pagetag|upcase}}</a></h4>
   <ul class="post-list">
   {%- for book in books %}

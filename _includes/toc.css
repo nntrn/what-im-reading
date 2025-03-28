@@ -1,0 +1,19 @@
+.container{flex-direction:column}
+.column-container{padding-bottom:1rem;padding-top:1rem;width:100%;margin:auto;column-width:max(250px,20vw);column-fill:balance;gap:3rem;column-count:1}
+.column-group{page-break-inside:avoid;margin-bottom:1rem}
+.column-group:nth-child(2n) .jump-top{display:none!important}
+.column-container h2{margin:0}
+h2{border-bottom:2px solid #222;font-size:1.2rem}
+h2>a{color:#222;text-decoration:none;font-weight:700;text-transform:uppercase;font-family:var(--font-serif)}
+a.h6{font-weight:700}
+.jump-top a{color:#ccc}
+.jump-top{margin-right:1rem}
+ol.book-list{padding-left:2rem;display:flex;flex-direction:column;gap:.5rem}
+ol li{padding-left:.25rem}
+@media (min-width:650px){
+.column-container{column-count:2}
+.jump-top{display:none}
+}
+@media (min-width:950px){
+.column-container{column-count:3;column-width:unset}
+}

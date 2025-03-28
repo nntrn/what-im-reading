@@ -4,16 +4,18 @@ type: genre
 ---
 {%-  assign booklist = page.books | sort: "title" %}
 <section>
-<h2>{{page.tag|replace: "-"," "}}</h2>
-  <ul style="width:90%" class="book-list">
+  <h2>{{page.tag|replace: "-"," "}}</h2>
+  <ol style="width:90%" class="book-list flex col gap-2">
     {%- for book in booklist %}
     <li>
-      <span class="title"><a href="{{book.slug}}">{{book.title}}</a> by {{book.author|split: ","|first}}</span>
-      <span class="divide">
-        <span>{{book.modified|date: '%b %Y'}}</span>
-        <span>{{book.count}} annotation{% if book.count > 1 %}s{%- endif -%}</span>
-      </span>
+      <div class="flex col">
+        <span class="title"><a href="{{book.slug}}">{{book.title}}</a> by {{book.author|split: ","|first}}</span>
+        <span class="divide">
+          <span>{{book.modified|date: '%b %Y'}}</span>
+          <span>{{book.count}} annotation{% if book.count > 1 %}s{%- endif -%}</span>
+        </span>
+      </div>
     </li>
     {%- endfor %}
-  </ul>
+  </ol>
 </section>

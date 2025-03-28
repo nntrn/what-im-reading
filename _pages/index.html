@@ -9,11 +9,11 @@ inline_css: ["index.css"]
 {%- assign maxcount = site.data.books | sort: "count" | last %} 
 
 <div class="panel sb">
-  <div id="numfilter" class="flex wrap gap-1">
+  <div id="numfilter" class="flex wrap gap-1 sm-col">
     <label data-filter-limit="0"><strong>FILTER COUNT</strong></label>
     <input type="range" id="rangefilter" min="0" max="{{maxcount.count}}" step="5" value="0" oninput="filterCount(value)" />
   </div>
-  <div class="flex wrap gap-1">
+  <div class="flex wrap gap-1 sm-col">
     <label><strong>SORT BY</strong></label>
     <select id="sortby" class="form-select" onchange="sortElements(value)">
       <option value="count" data-type="number">Count</option>
@@ -25,12 +25,12 @@ inline_css: ["index.css"]
 <div class="books" data-sort="created" style="--gap:.5rem"> 
 {% for book in books %} 
   {% assign title = book.title | replace: '"', "" | split: " (" | first | split: "," | first | split: ":" | first -%} 
-  <div class="book flex col" 
+  <div class="book flex col gap-1" 
       data-count="{{book.count}}" 
       data-genre="{{book.tags}}" 
       data-last-activity="{{book.modified}}" 
       data-created="{{book.created}}">
-    <a class="book-url gap-2" href="{{ site.baseurl }}/{{book.url}}">
+    <a class="book-url gap-3" href="{{ site.baseurl }}/{{book.url}}">
       <img src="{{ site.baseurl }}/assets/covers/{{book.assetid}}.jpg" title="{{title}} by {{book.author}}" />
       <strong>{{ title }}</strong>
     </a>

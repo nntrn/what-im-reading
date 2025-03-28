@@ -36,11 +36,9 @@
       </nav>
     </div>
   </header>
-
   <main id="top">
-    {%- if page.title -%}<div class="breadcrumb">{%- include breadcrumb.html -%}</div>{%- endif -%}
-    
-    <div class="content">
+    <div class="content flex col gap">
+      {%- if page.title -%}<div class="breadcrumb">{%- include breadcrumb.html -%}</div>{%- endif -%}
       {{ content }}
     </div>
   </main>

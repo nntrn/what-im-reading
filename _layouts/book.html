@@ -1,7 +1,7 @@
 ---
 layout: default
 type: book
-inline_css: ["chapter.css"] 
+inline_css: ["book.css"] 
 inline_js: ["scripts/book.js"]
 ---
 {%- assign pagecreated = page.created | date: "%b %Y" -%}
@@ -10,16 +10,17 @@ inline_js: ["scripts/book.js"]
 {%- assign chapters = annotations| sort: "rangestart" | group_by: "chapter" -%}
 
 <article class="book-page">
-  <h2 data-label="title">{{page.title}}</h2>
-  <h3 data-label="author" class="semibold">{{page.author}}</h3>
-  <p class="info">
-    {{annotations.size}} annotation{% if annotations.size > 1 %}s{%- endif %} &bull; 
-    {{pagecreated}}{%- if pagemodified != pagecreated -%}&nbsp;&ndash;&nbsp;{{pagemodified}}{%- endif %} &bull;
-    <a href="{{site.baseurl}}/api/{{page.assetid}}.json">data</a>
-  </p>
-  <hr>
-  <section class="flex sticky">
-    <div class="chapters">
+  <nav class="flex col gap border">
+    <h2 data-label="title">{{page.title}}</h2>
+    <h3 data-label="author" class="semibold">{{page.author}}</h3>
+    <div class="info">
+      {{annotations.size}} annotation{% if annotations.size > 1 %}s{%- endif %} &bull; 
+      {{pagecreated}}{%- if pagemodified != pagecreated -%}&nbsp;&ndash;&nbsp;{{pagemodified}}{%- endif %} &bull;
+      <a href="{{site.baseurl}}/api/{{page.assetid}}.json">data</a>
+    </div>
+  </nav>
+  <section class="flex sticky gap">
+    <div class="chapters flex col gap-3">
     {%- for chapter in chapters %}
     {%- assign sortedchapteritems = chapter.items | sort: "cfi" %}
       <h3 id="{{chapter.name | slugify: 'latin'}}">{{chapter.name|replace:'#',''|strip}}</h3>
@@ -47,11 +48,7 @@ inline_js: ["scripts/book.js"]
       {%- endfor %}
     </nav>
 
-
-
   </section>
-
-
 
 </article>
 

@@ -5,13 +5,14 @@ type: genre
 {%-  assign booklist = page.books | sort: "title" %}
 <section>
   <h2>{{page.tag|replace: "-"," "}}</h2>
-  <ol style="width:90%" class="book-list flex col gap-2">
+  <ol style="width:90%" class="book-list flex col gap-3">
     {%- for book in booklist %}
     <li>
       <div class="flex col">
         <span class="title"><a href="{{book.slug}}">{{book.title}}</a> by {{book.author|split: ","|first}}</span>
-        <span class="divide">
+        <span class="divide flex gap-1 small">
           <span>{{book.modified|date: '%b %Y'}}</span>
+          <span class="accent">&bull;</span>
           <span>{{book.count}} annotation{% if book.count > 1 %}s{%- endif -%}</span>
         </span>
       </div>

@@ -23,10 +23,9 @@ html {
   --bullet: hsl(var(--deg), 80%, 60%);
   --gap-unit: .25rem;
   color: var(--body-color);
-  word-spacing: -1px;
-  line-height: 1.2
+  word-spacing: -1px
 }
-body{font-family:var(--font-serif);tab-size:4;padding:0;margin:0;box-sizing:border-box;font-size:inherit;margin:0 auto}
+body{font-family:var(--font-serif);tab-size:4;padding:0;margin:0;box-sizing:border-box;font-size:inherit;margin:0 auto;line-height:1.3}
 [hidden]{display:none!important}
 label{font-size:.85rem}
 hr{border:0;border-bottom:1px solid #ccc}
@@ -79,8 +78,11 @@ a{text-underline-offset:2px}
 ul li::marker{font-weight:900;font-size:1.1em;display:block;color:hsl(0,0%,75.7%)}
 ul li::marker{font-weight:900;font-size:1.1em;color:var(--accent);font-family:var(--serif-font)}
 h2,h3,h4,q,strong{-webkit-font-smoothing:auto;-moz-osx-font-smoothing:auto;font-kerning:auto;font-variant:auto;-webkit-font-smoothing:auto;-moz-osx-font-smoothing:auto;text-rendering:auto}
+.accent{color:var(--accent)}
 input[type=range]{-webkit-appearance:none}
 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;cursor:ew-resize;box-shadow:0 0 2px 0 #555;transition:background .3s ease-in-out}
 input[type=range]::-webkit-slider-runnable-track{-webkit-appearance:none;box-shadow:none;border:none;background:0 0}
 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;border-radius:100%;background:#fff;cursor:ew-resize;box-shadow:0 0 2px 0 #555}
 [type=range]::-moz-range-thumb{box-sizing:border-box;border:1px solid #222;width:11px;border-radius:50%;background:#fff}
+.small,small{font-size:.875em}
+.muted{color:hsl(var(--deg),35%,55%)}

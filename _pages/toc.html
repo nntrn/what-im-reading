@@ -15,8 +15,9 @@ inline_css: ["toc.css"]
       {%- assign bookmodified = book.modified | date: "%b %Y" -%}
       {%- assign bookcreated = book.created | date: "%b %Y" %}
       <li data-modified="{{book.modified|date: '%F' }}" data-created="{{book.created|date:'%F'}}">
-        <a data-count="{{book.count}}" href="{{ site.baseurl }}/{{genre.tag}}/{{book.slug}}">{{book.title}}</a>
+        <a href="{{ site.baseurl }}/{{genre.tag}}/{{book.slug}}">{{book.title}}</a>
         <br><span data-label="author">{{book.author}}</span>
+        <br><span data-label="count" class="muted small" >{{book.count}} annotation{% if book.count > 1 %}s{%- endif %}</span>
       </li>
     {%- endfor %}
     </ol>

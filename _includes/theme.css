@@ -1,15 +1,15 @@
 html {
-  font-size: 14px
+  font-size: 12px
 }
 
 :root {
   --font-monospace: courier, monospace;
   --font-sans-serif: Helvetica, Helvetica Neue, Arial, sans-serif;
-  --font-serif: times, serif;
+  --font-serif: monospace, times, serif;
   --serif-font: var(--font-serif);
   --gap-unit: 0.25rem;
   --padding: 1.5rem;
-  --deg: 67;
+  --deg: 7;
   --sat: 70%;
   --light: 79.2%;
   --accent: hsl(var(--deg), var(--sat), 50%);
@@ -23,21 +23,8 @@ html {
   --bullet: hsl(var(--deg), 80%, 60%);
   --gap-unit: .25rem;
   color: var(--body-color);
-  text-rendering: geometricprecision;
   word-spacing: -1px;
-  line-height: 1.2;
-  -webkit-text-size-adjust: none;
-  -moz-text-size-adjust: none;
-  -ms-text-size-adjust: none;
-  text-size-adjust: none;
-  font-weight: 500;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: subpixel-antialiased;
-  font-kerning: auto;
-  font-variant: normal;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility
+  line-height: 1.2
 }
 body{font-family:var(--font-serif);tab-size:4;padding:0;margin:0;box-sizing:border-box;font-size:inherit;margin:0 auto}
 [hidden]{display:none!important}
@@ -82,13 +69,18 @@ h1{font-weight:700;font-size:calc(var(--body-font-size) * 2);font-size:1.2rem;ma
 h4{margin:0;font-weight:400}
 ul{margin:0}
 h2{margin-top:calc(var(--default-margin) * 1.35)}
-a:hover{background:var(--accent);color:var(--bold-color);box-shadow:#fff 2px -2px inset,#fff -2px 2px inset}
+a:hover{background:hsl(var(--deg),70%,90%);color:var(--bold-color)}
 a,u{text-decoration:underline;color:var(--link-color);text-decoration-style:dotted;text-decoration-thickness:1.25px!important}
 main{padding:0;margin:auto;position:relative}
 main>:first-child{align-self:stretch}
 body{position:relative;margin:auto;padding:0;height:fit-content;tab-size:4}
 header>div{break-inside:avoid}
 a{text-underline-offset:2px}
-ul li::marker{font-weight:900;font-size:1.1em;display:block;color:hsl(0,0%,75.7%);}
+ul li::marker{font-weight:900;font-size:1.1em;display:block;color:hsl(0,0%,75.7%)}
 ul li::marker{font-weight:900;font-size:1.1em;color:var(--accent);font-family:var(--serif-font)}
 h2,h3,h4,q,strong{-webkit-font-smoothing:auto;-moz-osx-font-smoothing:auto;font-kerning:auto;font-variant:auto;-webkit-font-smoothing:auto;-moz-osx-font-smoothing:auto;text-rendering:auto}
+input[type=range]{-webkit-appearance:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;cursor:ew-resize;box-shadow:0 0 2px 0 #555;transition:background .3s ease-in-out}
+input[type=range]::-webkit-slider-runnable-track{-webkit-appearance:none;box-shadow:none;border:none;background:0 0}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;border-radius:100%;background:#fff;cursor:ew-resize;box-shadow:0 0 2px 0 #555}
+[type=range]::-moz-range-thumb{box-sizing:border-box;border:1px solid #222;width:11px;border-radius:50%;background:#fff}

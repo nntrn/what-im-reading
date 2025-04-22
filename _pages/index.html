@@ -26,19 +26,19 @@ inline_css: ["index.css"]
 {% for book in books %} 
   {% assign title = book.title | replace: '"', "" | split: " (" | first | split: "," | first | split: ":" | first -%} 
   <div class="book flex col gap-1" 
-      data-count="{{book.count}}" 
-      data-genre="{{book.tags}}" 
-      data-last-activity="{{book.modified}}" 
-      data-created="{{book.created}}">
-    <a class="book-url gap-3" href="{{ site.baseurl }}/{{book.url}}">
-      <img src="{{ site.baseurl }}/assets/covers/{{book.assetid}}.jpg" title="{{title}} by {{book.author}}" />
-      <strong>{{ title }}</strong>
+    data-count="{{book.count}}" 
+    data-genre="{{book.tags}}" 
+    data-last-activity="{{book.modified}}" 
+    data-created="{{book.created}}">
+    <label data-query="genre" class="genre" title="{{book.tags}}">{{book.tags}}</label>
+    <a href="{{ site.baseurl }}/{{book.url}}">
+      <img src="{{ site.baseurl }}/assets/covers/{{book.assetid}}.jpg" />
+      <strong><span>{{ title }}</span></strong>
     </a>
-    <label class="clamp" style="--clamp-lines:2">{{book.author}}</label>
-    <label class="date" data-label="created">{{book.created|date:'%b %Y'}}</label>
-    <label class="date" data-label="updated">{{book.modified|date:'%b %Y'}}</label>
-    <label class="genre {{book.tags}}" title="{{book.tags}}">{{book.tags}}</label>
-    <label class="count toast">{{book.count}}<label>
+    <label data-query="author" class="clamp" style="--clamp-lines:2">{{book.author}}</label>
+    <label data-query="created" class="date" data-label="created">{{book.created|date:'%b %Y'}}</label>
+    <label data-query="modified" class="date" data-label="updated">{{book.modified|date:'%b %Y'}}</label>
+    <label data-query="count" data-after="annotation{% if book.count > 1 %}s{%- endif -%}" class="count toast">{{book.count}}</label>
   </div> 
 {%- endfor %} 
 </div>

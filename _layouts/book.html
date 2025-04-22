@@ -10,7 +10,7 @@ inline_js: ["scripts/book.js"]
 {%- assign chapters = annotations| sort: "rangestart" | group_by: "chapter" -%}
 
 <article class="book-page">
-  <nav class="flex col gap border">
+  <nav class="flex col gap-2 border">
     <h2 data-label="title">{{page.title}}</h2>
     <h3 data-label="author" class="semibold">{{page.author}}</h3>
     <div class="info">

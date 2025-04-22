@@ -2,9 +2,9 @@
 .toc a:hover{text-decoration:none;background:#eee}
 .toc a:hover:after{text-decoration:none;border:0;content:attr(title);position:absolute;right:1.5rem;color:#fff;background:#222;padding:2px 4px;z-index:1;font-size:.8rem}
 .chapters q{white-space:pre-line;display:block;line-height:1.2;line-break:loose;word-break::break-word}
-.annotation-list{padding-left:1.15rem;display:flex;gap:1rem;flex-direction:column}
-.annotation-list li{padding-left:.5rem;list-style-type:decimal}
-.mark q{background:#fcf2c8;display:inline}
+.annotation-list{margin-bottom:1rem;display:flex;gap:1rem;flex-direction:column;padding-left:1.5rem}
+.annotation-list li{padding-left:.5rem}
+.mark q{background:hsl(var(--deg),60%,94%);display:inline}
 q:after{content:"";display:block}
 .post-list{padding-left:1rem;display:flex;flex-direction:column;gap:.35rem;font-size:.9em}
 .post-list li{padding-left:.5rem}
@@ -12,9 +12,13 @@ q:after{content:"";display:block}
 .toc{position:sticky;top:0;right:0;display:block;max-width:100px;max-height:70vh;z-index:1000}
 .chapters{position:relative;margin-top:1rem;margin-bottom:1rem}
 .chapters aside{margin-top:1rem}
-.bookmark{width:90%}
+.chapters aside{border-top:1px solid var(--gray);padding-top:2rem}
+.bookmark{width:99%}
 .book-page{padding-top:.4rem}
 .book-page nav{padding-bottom:1rem}
 aside [data-count]:after{content:attr(data-count);display:inline-block;margin-left:.4rem;font-size:.7em;border-radius:100%;line-height:1;padding:.15rem .3rem;background:var(--lighter,#f2f2f2);color:var(--dark-accent,#aaa)}
 .border{border-bottom:1px solid #222}
-.timestamp{font-family:var(--font-sans-serif);color:var(--gray)}
+.timestamp{font-family:monospace;color:var(--gray);font-size:.8em;letter-spacing:-.25px}
+aside{padding-left:1rem;padding-right:1rem}
+
+.chapters h3{font-family:sans-serif;font-size:1.4em}

@@ -3,16 +3,20 @@ layout: default
 type: genre
 ---
 {%-  assign booklist = page.books | sort: "title" %}
-<section>
-<h2>{{page.tag|replace: "-"," "}}</h2>
-  <ul style="width:90%" class="d-flex flex-column gap-3">
+<section class="box">
+  <h2>{{page.tag|replace: "-"," "}}</h2>
+  <ol style="width:90%" class="col gap-lg">
     {%- for book in booklist %}
-    <li class="small text-mute">
-      <h3 class="h6"><a href="{{book.slug}}">{{book.title}}</a> by {{book.author|split: ","|first}}</h3>
-      <span>last read on <time>{{book.modified|date: '%b %e %Y'}}</time></span>
-      <span>&nbsp;/&nbsp;</span>
-      <span class="accent">{{book.count}} annotation{% if book.count > 1 %}s{%- endif -%}</span>
+    <li>
+      <div class="flex col">
+        <span class="title"><a href="{{book.slug}}">{{book.title}}</a> by {{book.author|split: ","|first}}</span>
+        <span class="infobox flex gap small">
+          <span>{{book.modified|date: '%b %Y'}}</span>
+          <span class="accent">&bull;</span>
+          <span>{{book.count}} annotation{% if book.count > 1 %}s{%- endif -%}</span>
+        </span>
+      </div>
     </li>
     {%- endfor %}
-  </ul>
+  </ol>
 </section>

@@ -1,0 +1,45 @@
+---
+title: Tags
+layout: default
+permalink: /tags
+---
+
+<style>
+.column-container{column-width:max(250px,20vw);column-fill:balance;gap:3rem;column-count:1;padding-top:1rem;padding-bottom:1rem;padding:1rem}
+.column-group{page-break-inside:avoid;margin-bottom:1rem}
+.column-container h2{font-size:1.2rem;text-transform:uppercase}
+.column-container h2{font-size:1rem;padding:0;margin:0;border-bottom:4px solid hsl(var(--deg),1%,85%)}
+.column-container h2>a{color:#222;text-decoration:none;font-weight:700}
+.book-list{display:flex;flex-direction:column;gap:1rem}
+.book-list a{font-weight:700}
+.jump-top{float:right}
+.jump-top a{text-decoration:none;color:#d3d3d3;font-size:.9em}
+.opacity-50{opacity:.5}
+#top{font-size:1.3rem;text-transform:uppercase;margin-bottom:1rem}
+@media (min-width:600px){
+.hidden-md{display:none!important}
+.column-container{column-count:4}
+}
+</style>
+{% assign genres = site.data.genres %}
+<div id="top"></div>
+<div class="column-container">
+{%- for genre in genres %}
+  <div class="column-group">
+    <h2 id="{{genre.tag}}"><a href="{{ site.baseurl }}/{{genre.tag}}">{{genre.tag|replace: "-"," "}}</a></h2>
+    <ol class="book-list" data-tag="{{genre.name}}">
+    {%- assign books = genre.books %}
+    {%- for book in books %}
+      {%- assign bookmodified = book.modified | date: "%b %Y" -%}
+      {%- assign bookcreated = book.created | date: "%b %Y" %}
+      <li data-modified="{{book.modified|date: '%F' }}" data-created="{{book.created|date:'%F'}}">
+        <a href="{{ site.baseurl }}/{{genre.tag}}/{{book.slug}}">{{book.title}}</a>
+        <br><span data-label="author">{{book.author}}</span>
+        <br><span data-label="count" class="muted small" >{{book.count}} annotation{% if book.count > 1 %}s{%- endif %}</span>
+      </li>
+    {%- endfor %}
+    </ol>
+
+  </div>
+{%- endfor -%}
+</div>

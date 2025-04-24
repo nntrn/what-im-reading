@@ -9,6 +9,8 @@ _scriptdir=${SCRIPT%/*}
 DEFAULT_REMOTE_URL="https://nntrn.github.io/store/annotations.json"
 DEFAULT_ANNOTATIONS_FILE=annotations.json
 
+COVERS_ZIP_URL="https://nntrn.github.io/store/covers.zip"
+
 export OUTDIR=$DIR
 export ANNOTATIONS_FILE=$DEFAULT_ANNOTATIONS_FILE
 export FETCH_REMOTE=0
@@ -36,6 +38,11 @@ jq_from_activity() {
   local func=$1
   _log "* Running $func" 35
   jq -L $_scriptdir "include \"annotations\"; $func" $DATADIR/activity.json
+}
+
+get_covers() {
+  curl -O https://nntrn.github.io/store/covers.zip
+  unzip -n -d $DIR/assets/covers covers.zip
 }
 
 get_annotations() {
@@ -68,8 +75,9 @@ if [[ ! -f $ANNOTATIONS_FILE ]] ||
   [[ ! -s $ANNOTATIONS_FILE ]] ||
   [[ $FETCH_REMOTE -eq 1 ]]; then
 
-  get_annotations &
-  wait %1
+  get_covers &
+  get_annotations
+  # wait %1
 fi
 
 if [[ -n $RUN_ONLY ]]; then
@@ -84,14 +92,14 @@ else
 
   jq_from_annotations create_book_data >$DATADIR/books.json &
   jq_from_annotations create_genre_data >$DATADIR/genres.json &
-  jq_from_annotations create_activity_data >$DATADIR/activity.json &
+  jq_from_annotations create_activity_data >$DATADIR/activity.json
   # jq_from_annotations create_word_data >$DATADIR/words.json &
-  wait %3
+  # wait %3
 
   jq_from_activity stats_bookmarks_per_month >$DATADIR/stats/bookmarks_per_month.json &
   jq_from_activity stats_month >$DATADIR/stats/month.json &
-  jq_from_activity stats_history >$DATADIR/history.json &
-  wait %3
+  jq_from_activity stats_history >$DATADIR/history.json
+  # wait %3
 
   # _log "* Creating _includes/activity.txt"
 

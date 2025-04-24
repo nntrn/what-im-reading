@@ -1,38 +1,54 @@
 ---
-layout: default
-permalink: /
+title: Home
+layout: default 
+permalink: / 
+inline_css: ["books.css"]
+inline_js: ["url.js"]
 ---
-<style>
-.column-container{margin:auto;column-width:max(250px,20vw);column-fill:balance;gap:3rem;column-count:1}
-.column-group{page-break-inside:avoid;margin-bottom:1rem}
-.column-group:nth-child(2n) .jump-top{display:none!important}
-h2{border-bottom:2px solid currentColor}
-h2>a{color:#222;text-decoration:none;font-weight:700}
-@media (min-width:650px){ .column-container{column-count:2} .jump-top{display:none}}
-@media (min-width:950px){ .column-container{column-count:3} }
-.jump-top a{color: #ccc;font-size:.85rem}
-.jump-top {margin-right:1rem}
-ol li{padding-left:.25rem}
-</style>
-{% assign genres = site.data.genres %}
-<div class="column-container">
-{%- for genre in genres %}
-  <div class="column-group">
-    <h2 id="{{genre.tag}}" class="h5 text-uppercase border-bottom border-2  border-black"><a href="{{ site.baseurl }}/{{genre.tag}}">{{genre.tag|replace: "-"," "}}</a></h2>
-    <ol class="d-flex flex-column gap-3 py-2 mx-2" data-tag="{{genre.name}}">
-    {%- assign books = genre.books %}
-    {%- for book in books %}
-      {%- assign bookmodified = book.modified | date: "%b %Y" -%}
-      {%- assign bookcreated = book.created | date: "%b %Y" %}
-      <li class="lh-1" data-modified="{{book.modified|date: '%F' }}" data-created="{{book.created|date:'%F'}}" data-count="{{book.count}}">
-        <a class="h6 link-primary" href="{{ site.baseurl }}/{{genre.tag}}/{{book.slug}}">{{book.title}}</a>
-        <span class="clamp">{{book.author}}</span>
-        <span class="text-uppercase smaller muted">{{ bookmodified }} &bullet; {{book.count}}</span>        
-      </li>
-    {%- endfor %}
-    </ol>
-    <div class="jump-top text-end"><a href="#top">[TOP]</a></div>
+
+{%- assign books = site.data.books | sort:"modified" | reverse %}
+{%- assign maxcount = site.data.books %}
+
+<div class="panel px-1 " style="--range-width:120px">
+  <div class="flex sb gap-md ss w-100 lh-1">
+
+    <div class2="flex ai-center center gap-sm lh-1" class="row gap baseline">
+      <label for="rangefilter" class="fs-90 ws-pre">LIMIT</label>
+      <input type="range" id="rangefilter" min="0" max="{{maxcount.count}}" step="5" value="1"
+            oninput="numfilter.value=value" onchange="filterCount(value)" />
+      <input type="number" id="numfilter" min="0" max="{{maxcount.count}}" step="5" value="1"
+            oninput="rangefilter.value=value" onchange="filterCount(value)" />
+    </div>
+    <div class="row gap baseline">
+      <label for="sortby" class="fs-90 ws-pre">Sort By</label>
+      <select id="sortby" class="form-select" onchange="sortElements(value)">
+        <option value="count" data-type="number">Count</option>
+        <option value="updated" data-type="date">Updated</option>
+        <option value="created" data-type="date" selected>Created</option>
+      </select>
+    </div>
   </div>
-{%- endfor -%}
+</div>
+<div class="flex px-1 py-1 gap-xl sm-col" style="z-index:1;flex-direction:column-reverse">
+  <div class="books" data-sort="created">
+    {% for book in books %}
+    {% assign title = book.title | replace: '"', "" | split: " (" | first | split: "," | first | split: ":" | first -%}
+    <div class="book ci" data-count="{{book.count}}" data-updated="{{book.modified | upcase }}" data-created="{{book.created|upcase}}">
+      <div class="book-info fs-90 w-100">
+        <span class="icon icon-note">{{book.count}}</span>
+        <span class="flex column">
+          <span data-label="created">{{book.created|date:'%F'}}</span>
+          <span data-label="updated">{{book.modified|date:'%F'}}</span>
+        </span>
+      </div>
+      <a class="flex column gap-lg" href="{{ site.baseurl }}/{{book.url}}">
+        <img src="{{ site.baseurl }}/assets/covers/{{book.assetid}}.jpg" title="{{title}} by {{book.author}}" />
+        <label><strong>{{ title }}</strong></label>
+      </a>
+      <span class="clamp fs-90 w-100 center muted" title="{{book.author}}">{{ book.author }}</span>
+    </div>
+    {%- endfor %}
+  </div>
+  <div class="cc" data-counter-label="book(s)"></div>
 </div>
 

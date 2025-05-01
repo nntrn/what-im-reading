@@ -20,9 +20,10 @@ inline_js: ["url.js"]
             oninput="rangefilter.value=value" onchange="filterCount(value)" />
     </div>
     <div class="row gap baseline">
-      <label for="sortby" class="fs-90 ws-pre">Sort By</label>
+      <label for="sortby" class="fs-90 ws-pre">SORT</label>
       <select id="sortby" class="form-select" onchange="sortElements(value)">
         <option value="count" data-type="number">Count</option>
+        <option value="genre" data-type="text">Genre</option>
         <option value="updated" data-type="date">Updated</option>
         <option value="created" data-type="date" selected>Created</option>
       </select>
@@ -33,7 +34,7 @@ inline_js: ["url.js"]
   <div class="books" data-sort="created">
     {% for book in books %}
     {% assign title = book.title | replace: '"', "" | split: " (" | first | split: "," | first | split: ":" | first -%}
-    <div class="book ci" data-count="{{book.count}}" data-updated="{{book.modified | upcase }}" data-created="{{book.created|upcase}}">
+    <div class="book ci" data-count="{{book.count}}" data-updated="{{book.modified|upcase}}" data-created="{{book.created|upcase}}" data-genre="{{book.tags}}">
       <div class="book-info fs-90 w-100">
         <span class="icon icon-note">{{book.count}}</span>
         <span class="flex column">
@@ -43,7 +44,7 @@ inline_js: ["url.js"]
       </div>
       <a class="flex column gap-lg" href="{{ site.baseurl }}/{{book.url}}">
         <img src="{{ site.baseurl }}/assets/covers/{{book.assetid}}.jpg" title="{{title}} by {{book.author}}" />
-        <label><strong>{{ title }}</strong></label>
+        <label class="genre {{book.tags}}" title="{{book.tags}}"><strong>{{ title }}</strong></span></label>
       </a>
       <span class="clamp fs-90 w-100 center muted" title="{{book.author}}">{{ book.author }}</span>
     </div>

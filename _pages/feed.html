@@ -3,10 +3,23 @@ title: feed
 layout: default
 permalink: /feed
 ---
+<style>
+table *{padding:0 0;margin:0 0;border:0;line-height:1;vertical-align:middle}
+table tr > *,tr,table div,.col {display: block ruby}
+td a{text-overflow:ellipsis;white-space:nowrap;overflow:hidden;max-width:300px;display:inline-block;line-height:1.3}
+table a{text-decoration: none;}
+table .small{font-size:.9em}
+.tag-text{color:#aaa}
+.compact .tag-text{display:none}
+.compact .small span{color:#aaa;visibility: visible}
+.compact .small {color:#aaa;visibility: hidden;display:flex;flex-direction: row-reverse}
+.compact td a{max-width:70vw}
+</style>
+
 {% assign books_by_date = site.data.books|sort:'created'|reverse|group_by_exp:"item","item.created|date: '%b %Y'" -%}
-<section class="books">
+<section class="container">
   <button class="btn btn-outline-success" onclick="this.nextElementSibling.classList.toggle('compact')">Toggle compact</button>
-  <table class="compact">
+  <table class="">
   {%- for books in books_by_date %}
   {%- assign list = books.items|sort:'created'|reverse %}
   <tr>
@@ -18,7 +31,7 @@ permalink: /feed
   {%- for book in list %}
   {%- assign statcount = site.data.stats.bookmarks_per_month[books.name]  %}
   <tr>
-    <th data-level="2"><div class="d-flex flex-column pb-3">
+    <th data-level="2"><div class="col">
       <time class="pre">{{book.created|date: '%F'}}</time>
       <a class="tag-text" href="{{book.tags}}">{{book.tags}}</a>
     </div></th>

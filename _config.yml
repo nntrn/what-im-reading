@@ -1,5 +1,5 @@
 title: what i'm reading
-description: saved excerpts of things
+description: saved snippets from Apple Books
 author: Annie Tran
 url: https://nntrn.github.io
 baseurl: /what-im-reading
@@ -18,7 +18,7 @@ compress_html:
   blanklines: true
   profile: false
 
-links: ["toc", "activity"]
+links: ["Tags", "Feed", "Activity", "About"]
 
 page_gen:
   - data: "genres"
@@ -32,12 +32,12 @@ page_gen:
     index_files: false
     dir: "tags"
 
-  # - data: "books"
-  #   template: "api"
-  #   name: "assetid"
-  #   index_files: false
-  #   dir: "api"
-  #   extension: ".json"
+  - data: "books"
+    template: "api"
+    name: "assetid"
+    index_files: false
+    dir: "api"
+    extension: ".json"
 
 include:
   - _pages

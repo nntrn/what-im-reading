@@ -5,7 +5,7 @@ type: genre
 {%-  assign booklist = page.books | sort: "title" %}
 <section class="box">
   <h2>{{page.tag|replace: "-"," "}}</h2>
-  <ol style="width:90%" class="col gap-lg">
+  <ol style="width:90%" class="col gap-lg book-list">
     {%- for book in booklist %}
     <li>
       <div class="flex col">

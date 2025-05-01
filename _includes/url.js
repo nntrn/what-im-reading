@@ -7,7 +7,8 @@ const urlparse = obj => '?' + Object.entries(obj).map(e => `${e[0]}=${e[1]}`).jo
 const sort = {
   number: (a, b) => (Number(a) > Number(b) ? -1 : 1),
   date: (a, b) => (new Date(a) > new Date(b) ? -1 : 1),
-  text: (a, b) => (a.toLowerCase() > b.toLowerCase() ? -1 : 1)
+  text: (a, b) => (a.toLowerCase() > b.toLowerCase() ? -1 : 1),
+  genre:  (a, b) => (b.toLowerCase() > a.toLowerCase() ? -1 : 1),
 }
 
 function prettyDate(dt) {
@@ -20,6 +21,7 @@ function prettyDate(dt) {
 function sortElements(search = urlquery().sort) {
   const sortType = $(`#sortby [value=${search}]`).dataset.type
   const sortParent = $(`[data-${search}]`).parentElement
+
   Array.from(sortParent.children)
     .sort((a, b) => sort[sortType](a.dataset[search], b.dataset[search]))
     .forEach((node) => {

@@ -2,19 +2,22 @@
 title: feed
 layout: default
 permalink: /feed
+page_style: |
+  table *{padding:0 0;margin:0 0;border:0;line-height:1;vertical-align:middle}
+  table tr > *,tr,table div,.col {display: block ruby}
+  td a{text-overflow:ellipsis;white-space:nowrap;overflow:hidden;max-width:300px;display:inline-block;line-height:1.3}
+  table a{text-decoration: none;}
+  table .small{font-size:.9em}
+  .tag-text{color:#aaa}
+  .compact .tag-text{display:none}
+  .compact .small span{color:#aaa;visibility: visible}
+  .compact .small {color:#aaa;visibility: hidden;display:flex;flex-direction: row-reverse}
+  .compact td a{max-width:70vw}
+  .compact td[data-level="2"]:empty + td{display:none}
+  .compact tr:empty,.compact td:empty,.compact th[data-level="1"]{display:none}
+  button{margin-bottom:1rem}
+  h4 {font-size:.9em;font-variant-numeric:proportional-nums}
 ---
-<style>
-table *{padding:0 0;margin:0 0;border:0;line-height:1;vertical-align:middle}
-table tr > *,tr,table div,.col {display: block ruby}
-td a{text-overflow:ellipsis;white-space:nowrap;overflow:hidden;max-width:300px;display:inline-block;line-height:1.3}
-table a{text-decoration: none;}
-table .small{font-size:.9em}
-.tag-text{color:#aaa}
-.compact .tag-text{display:none}
-.compact .small span{color:#aaa;visibility: visible}
-.compact .small {color:#aaa;visibility: hidden;display:flex;flex-direction: row-reverse}
-.compact td a{max-width:70vw}
-</style>
 
 {% assign books_by_date = site.data.books|sort:'created'|reverse|group_by_exp:"item","item.created|date: '%b %Y'" -%}
 <section class="container">

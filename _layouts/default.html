@@ -17,23 +17,29 @@
   <meta name="robots" content="index, follow">
 
 <style>
-  {% include style.css %}
+{% include style.css %}
 </style>
 
-{%- if page.inline_css %}
 <style>
-  {% for css in page.inline_css -%}
-  {% include {{css}} %}
-  {%- endfor %}  
-</style>
+{%- if page.inline_css %}
+{%- for css in page.inline_css -%}
+{% include {{css}} %}
+{%- endfor %}
 {%- endif %}
+
+{%- if page.page_style -%}
+{{ page.page_style }}
+{%- endif %}
+</style>
+
 </head>
 
-<body data-layout="{%- if page.layout == 'default' -%}{{page.title}}{% else %}{{page.layout}}{%- endif -%}">
+<body data-layout="{{page.layout}}">
 
   <header>
     <h1 title="{{site.title}}"><a class="gc site-title" href="{{ '/' | relative_url }}">{{site.title}}</a></h1>
   </header>
+  {% if page.title == 'Home' %}{% include panel.html %}{% endif %}
 
   <main>
   {{- content -}}

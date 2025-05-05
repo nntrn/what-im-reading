@@ -4,44 +4,25 @@ layout: default
 permalink: / 
 inline_css: ["books.css"]
 inline_js: ["url.js"]
+page_style: |
+  .book-info{display:none}
+  [data-sort] .book:hover:before{opacity:.4}
+  [data-sort] .book:before{content:attr(data-created);font-size:.9rem;text-align:center}
+  [data-sort=genre] .book:before{content:attr(data-genre)}
+  [data-sort=count] .book:before{content:attr(data-count) " highlights"}
+  [data-sort=created] .book:before{content:attr(data-created)}
+  [data-sort=updated] .book:before{content:attr(data-updated)}
+  header{position:relative}
 ---
 
 {%- assign books = site.data.books | sort:"modified" | reverse %}
 {%- assign maxcount = site.data.books %}
 
-<div class="panel px-1 " style="--range-width:120px">
-  <div class="flex sb gap-md ss w-100 lh-1">
-
-    <div class2="flex ai-center center gap-sm lh-1" class="row gap baseline">
-      <label for="rangefilter" class="fs-90 ws-pre">LIMIT</label>
-      <input type="range" id="rangefilter" min="0" max="{{maxcount.count}}" step="5" value="1"
-            oninput="numfilter.value=value" onchange="filterCount(value)" />
-      <input type="number" id="numfilter" min="0" max="{{maxcount.count}}" step="5" value="1"
-            oninput="rangefilter.value=value" onchange="filterCount(value)" />
-    </div>
-    <div class="row gap baseline">
-      <label for="sortby" class="fs-90 ws-pre">SORT</label>
-      <select id="sortby" class="form-select" onchange="sortElements(value)">
-        <option value="count" data-type="number">Count</option>
-        <option value="genre" data-type="text">Genre</option>
-        <option value="updated" data-type="date">Updated</option>
-        <option value="created" data-type="date" selected>Created</option>
-      </select>
-    </div>
-  </div>
-</div>
 <div class="flex px-1 py-1 gap-xl sm-col" style="z-index:1;flex-direction:column-reverse">
   <div class="books" data-sort="created">
     {% for book in books %}
     {% assign title = book.title | replace: '"', "" | split: " (" | first | split: "," | first | split: ":" | first -%}
-    <div class="book ci" data-count="{{book.count}}" data-updated="{{book.modified|upcase}}" data-created="{{book.created|upcase}}" data-genre="{{book.tags}}">
-      <div class="book-info fs-90 w-100">
-        <span class="icon icon-note">{{book.count}}</span>
-        <span class="flex column">
-          <span data-label="created">{{book.created|date:'%F'}}</span>
-          <span data-label="updated">{{book.modified|date:'%F'}}</span>
-        </span>
-      </div>
+    <div class="book ci" data-count="{{book.count}}" data-updated="{{book.modified|date:'%b %e %Y'|upcase}}" data-created="{{book.created|date:'%b %e %Y'|upcase}}" data-genre="{{book.tags|replace:'-',' '}}">
       <a class="flex column gap-lg" href="{{ site.baseurl }}/{{book.url}}">
         <img src="{{ site.baseurl }}/assets/covers/{{book.assetid}}.jpg" title="{{title}} by {{book.author}}" />
         <label class="genre {{book.tags}}" title="{{book.tags}}"><strong>{{ title }}</strong></span></label>

@@ -1,0 +1,21 @@
+<div class="panel px-1 " style="--range-width:120px">
+  <div class="flex sb gap-md ss w-100 lh-1">
+
+    <div class2="flex ai-center center gap-sm lh-1" class="row gap baseline">
+      <label for="rangefilter" class="fs-90 ws-pre">LIMIT</label>
+      <input type="range" id="rangefilter" min="0" max="{{maxcount.count}}" step="5" value="1"
+            oninput="numfilter.value=value" onchange="filterCount(value)" />
+      <input type="number" id="numfilter" min="0" max="{{maxcount.count}}" step="5" value="1"
+            oninput="rangefilter.value=value" onchange="filterCount(value)" />
+    </div>
+    <div class="row gap baseline">
+      <label for="sortby" class="fs-90 ws-pre">SORT</label>
+      <select id="sortby" class="form-select" onchange="sortElements(value)">
+        <option value="count" data-type="number">Count</option>
+        <option value="genre" data-type="text">Genre</option>
+        <option value="updated" data-type="date">Updated</option>
+        <option value="created" data-type="date" selected>Created</option>
+      </select>
+    </div>
+  </div>
+</div>

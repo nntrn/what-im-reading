@@ -71,41 +71,46 @@ done
 
 export DATADIR=$OUTDIR/_data
 
-if [[ ! -f $ANNOTATIONS_FILE ]] ||
-  [[ ! -s $ANNOTATIONS_FILE ]] ||
-  [[ $FETCH_REMOTE -eq 1 ]]; then
+_main() {
 
-  get_covers &
-  get_annotations
-  # wait %1
-fi
+  if [[ ! -f $ANNOTATIONS_FILE ]] ||
+    [[ ! -s $ANNOTATIONS_FILE ]] ||
+    [[ $FETCH_REMOTE -eq 1 ]]; then
 
-if [[ -n $RUN_ONLY ]]; then
-  if [[ $RUN_ONLY == "stat_"* ]]; then
-    jq_from_activity $RUN_ONLY
-  else
-    jq_from_annotations $RUN_ONLY
+    get_covers &
+    get_annotations
+    # wait %1
   fi
-else
 
-  mkdir -p $OUTDIR/{_data/stats,_pages}
+  if [[ -n $RUN_ONLY ]]; then
+    if [[ $RUN_ONLY == "stat_"* ]]; then
+      jq_from_activity $RUN_ONLY
+    else
+      jq_from_annotations $RUN_ONLY
+    fi
+  else
 
-  jq_from_annotations create_book_data >$DATADIR/books.json &
-  jq_from_annotations create_genre_data >$DATADIR/genres.json &
-  jq_from_annotations create_activity_data >$DATADIR/activity.json
-  # jq_from_annotations create_word_data >$DATADIR/words.json &
-  # wait %3
+    mkdir -p $OUTDIR/{_data/stats,_pages}
 
-  jq_from_activity stats_bookmarks_per_month >$DATADIR/stats/bookmarks_per_month.json &
-  jq_from_activity stats_month >$DATADIR/stats/month.json &
-  jq_from_activity stats_history >$DATADIR/history.json
-  # wait %3
+    jq_from_annotations create_book_data >$DATADIR/books.json &
+    jq_from_annotations create_genre_data >$DATADIR/genres.json &
+    jq_from_annotations create_activity_data >$DATADIR/activity.json
+    # jq_from_annotations create_word_data >$DATADIR/words.json &
+    # wait %3
 
-  # _log "* Creating _includes/activity.txt"
+    jq_from_activity stats_bookmarks_per_month >$DATADIR/stats/bookmarks_per_month.json &
+    jq_from_activity stats_month >$DATADIR/stats/month.json &
+    jq_from_activity stats_history >$DATADIR/history.json
+    # wait %3
 
-#   jq -r -L $_scriptdir --slurpfile books $DATADIR/books.json 'include "annotations"; stats_history_text' \
-#     $DATADIR/history.json >$OUTDIR/_pages/activity.txt
-#
-#   cat $OUTDIR/_pages/activity.txt >$OUTDIR/_includes/activity.txt
+    # _log "* Creating _includes/activity.txt"
 
-fi
+  #   jq -r -L $_scriptdir --slurpfile books $DATADIR/books.json 'include "annotations"; stats_history_text' \
+  #     $DATADIR/history.json >$OUTDIR/_pages/activity.txt
+  #
+  #   cat $OUTDIR/_pages/activity.txt >$OUTDIR/_includes/activity.txt
+
+  fi
+}
+
+_main

@@ -54,7 +54,7 @@ def format_quotes:
   | map(
       select(test("[a-zA-Z0-9]"))
       | gsub("[\\t]+"; "\t")
-      | if length > 400 then  gsub("(?<=[\\S\\s]{300,500}\\.) "; "\n\n") else . end
+      # | if length > 400 then  gsub("(?<=[\\S\\s]{300,500}\\.) "; "\n\n") else . end
     ) 
   ;
 

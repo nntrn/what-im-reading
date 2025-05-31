@@ -1,0 +1,7 @@
+_data
+_site
+assets/covers/*.jpg
+annotations.json
+covers.zip
+activity.txt
+*.lock

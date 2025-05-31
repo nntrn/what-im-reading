@@ -49,7 +49,6 @@ page_style: |
       <span>Last on <strong><time datetime="{{page.modified}}">{{pagemodified}}</time></strong>.</span>
       {%- endif -%}
     </p>
-    <p><span class="fs-90 up muted">{{annotations.size}} quote{%- if annotations.size > 1 -%}s{%- endif -%}</span></p>
     <div class="tag-list mt-1">
       {%- for tag in page.tags -%}
       <a href="{{ site.baseurl }}/{{tag}}" class="tag fs-90 gc">{{ tag }}</a>

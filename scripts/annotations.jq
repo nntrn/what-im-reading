@@ -20,8 +20,8 @@ def create_book_data:
       started: ($created|fromdate|strflocaltime("%b %Y")|ascii_upcase),
       tags: (.[0].ZGENRE|get_tags),
       slug: "\(get_author_slug(.[0].ZAUTHOR))-\(slugify(.[0].ZTITLE))",
-      count: length,
-      saved: length
+      count: length
+      # saved: length
   }) | map(. + {url: "\(.tags)/\(.slug)"});
 
 def create_activity_data:

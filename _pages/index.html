@@ -5,14 +5,12 @@ permalink: /
 inline_css: ["books.css"]
 inline_js: ["url.js"]
 page_style: |
-  .book-info{display:none}
-  [data-sort] .book:hover:before{opacity:.4}
-  [data-sort] .book:before{content:attr(data-created);font-size:.9rem;text-align:center}
-  [data-sort=genre] .book:before{content:attr(data-genre)}
-  [data-sort=count] .book:before{content:attr(data-count) " highlights"}
-  [data-sort=created] .book:before{content:attr(data-created)}
-  [data-sort=updated] .book:before{content:attr(data-updated)}
   header{position:relative}
+  .bookstats{align-items:end;display:flex;justify-content:space-between;align-content:flex-end;line-height:1;font-size:.8em;margin-bottom:.5rem;width:100%}
+  .bookstats span{white-space:pre}
+  [data-label=created]{display:none}
+  [data-sort=created] [data-label=updated]{display:none}
+  [data-sort=created] [data-label=created]{display:block}
 ---
 
 {%- assign books = site.data.books | sort:"modified" | reverse %}
@@ -22,10 +20,15 @@ page_style: |
   <div class="books" data-sort="created">
     {% for book in books %}
     {% assign title = book.title | replace: '"', "" | split: " (" | first | split: "," | first | split: ":" | first -%}
-    <div class="book ci" data-count="{{book.count}}" data-updated="{{book.modified|date:'%b %e %Y'|upcase}}" data-created="{{book.created|date:'%b %e %Y'|upcase}}" data-genre="{{book.tags|replace:'-',' '}}">
+    <div class="book ci" data-count="{{book.count}}" data-updated="{{book.modified}}" data-created="{{book.created}}">
+      <div class="bookstats">
+        <span class="icon icon-note">{{book.count}}</span>
+        <span data-label="created">{{book.created|date:'%b %e %Y'}}</span>
+        <span data-label="updated">{{book.modified|date:'%b %e %Y'}}</span>
+      </div>      
       <a class="flex column gap-lg" href="{{ site.baseurl }}/{{book.url}}">
         <img src="{{ site.baseurl }}/assets/covers/{{book.assetid}}.jpg" title="{{title}} by {{book.author}}" />
-        <label class="genre {{book.tags}}" title="{{book.tags}}"><strong>{{ title }}</strong></span></label>
+        <label class="genre" title="{{book.tags}}"><strong>{{title}}</strong></label>
       </a>
       <span class="clamp fs-90 w-100 center muted" title="{{book.author}}">{{ book.author }}</span>
     </div>

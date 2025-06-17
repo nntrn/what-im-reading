@@ -8,7 +8,7 @@ label{font-weight:500}
 .book label span{overflow:hidden;font-weight:400;color:#aaa;line-height:1.2;margin:auto;font-family:var(--body-font)}
 .book label{display:flex;flex-direction:column;gap:.3rem;justify-content:center;text-align:center;letter-spacing:-.025px;hyphens:none;cursor:pointer;margin:auto}
 .book strong{font-weight:600;hyphens:none;word-break:break-word;color:#333;font-size:.9em}
-.book{position:relative;width:min-content;display:flex;flex-direction:column;gap:.2rem;display:flex;justify-content:center;row-gap:.4rem}
+.book{position:relative;width:min-content;display:flex;flex-direction:column;gap:.2rem;display:flex;justify-content:flex-start;row-gap:.2rem}
 .books{display:flex;flex-wrap:wrap;justify-content:space-between;padding:0;row-gap:3rem;align-items:flex-start;margin:auto;column-gap:5rem;scrollbar-width:thin;height:100%;min-height:70vh;align-content:flex-start}
 .panel{position:sticky;top:0;z-index:1000;background:var(--bg-color);padding:.5rem 0;border-bottom:1px solid #eee;display:flex;align-content:center;align-items:center;font-family:var(--font-monospace)}
 .sticky{position:sticky;top:0;z-index:1000}

@@ -2,15 +2,17 @@
 layout: default
 page_style: |
   .page-content li{all:unset}
-  q{white-space:pre-line;display:block;word-break:break-word;quotes:none}
+  .q{white-space:pre-line;display:block;word-break:break-word;quotes:none}
   .annotation-list li{display:list-item}
   .annotation-list q{white-space:pre-line}
   .annotation-list{display:flex;flex-direction:column;gap:1rem}
-  .highlighted q:after{content:"";display:block}
-  .highlighted q{background:hsl(50,80%,83.5%);display:inline;line-height:1.5}
+  .highlighted .qq:after{content:"";display:block}
+  .highlighted .q{background:hsl(50,80%,83.5%);display:inline;line-height:1.5}
   .post-list li a{line-height:1.5;--box-shadow:currentColor;box-shadow:inset 0 -1.25px 0 #fff,inset 0 -3px 0 var(--box-shadow);text-decoration:none;transition:box-shadow .3s}
   .post-list li a:hover{--box-shadow:var(--border-color)}
-  .timestamp a{background:unset;text-decoration:none;}
+  li[data-count]:after{content:"• "attr(data-count);font-size:.9em;line-height:1;}
+  aside.nav li strong{font-weight:900}
+  .timestamp a{background:unset;text-decoration:none}
   .timestamp{display:block;margin-top:2px;font-weight:700}
   @media (max-width:700px){
   .page-content{padding-left:1rem;padding-right:1rem;flex:1}
@@ -27,7 +29,6 @@ page_style: |
   .sidebar ul{margin:0 1rem;padding:0}
   .annotation-list{margin:0 1rem;padding:0 .5rem}
   .separator{border-top:1px dotted #222;padding-top:1rem}
-  }
 ---
 {%- assign pagecreated = page.created | date_to_string: "ordinal", "US" -%}
 {%- assign pagemodified = page.modified |  date_to_string: "ordinal", "US" -%}
@@ -62,8 +63,8 @@ page_style: |
     <ul class="annotation-list" style="--gap:5px">
       {%- for annotation in sortedchapteritems %}
       <li id="{{annotation.id}}" class="bookmark">
-        <q>{{ annotation.text }}</q>
-        <small class="timestamp flex gap" aria-hidden="true">
+        <span class="q">{{ annotation.text }}</span>
+        <small class="timestamp" aria-hidden="true">
           <a href="#{{annotation.id}}">#{{annotation.id}}</a>
           <span class="accent">&bull;</span>
           <time>{{annotation.created|date:'%b %-d %Y %-I:%M%p'}}</time>

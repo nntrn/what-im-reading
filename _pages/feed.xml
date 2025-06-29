@@ -22,7 +22,7 @@ permalink: /feed.xml
 
   {%- for book in site.data.books %}
   <entry>
-    {% assign post_title = book.title | smartify | strip_html | normalize_whitespace | xml_escape %}
+    {%- assign post_title = book.title | smartify | strip_html | normalize_whitespace | xml_escape %}
     <title type="html">{{ post_title }}</title>
     <link href="{{ book.url | absolute_url }}" rel="alternate" type="text/html" title="{{ post_title }}" />
     <published>{{book.created | date_to_xmlschema}}</published>
@@ -36,10 +36,8 @@ permalink: /feed.xml
       <name>{{book.author | xml_escape}}</name>
     </author>
     <category term="{{book.tags}}" />
-    <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="{{site.baseurl|absolute_url}}/assets/covers/{{book.assetid}}.jpg" />
-    <media:content medium="image" url="{{site.baseurl|absolute_url}}/assets/covers/{{book.assetid}}.jpg" xmlns:media="http://search.yahoo.com/mrss/" />
+    <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="/assets/covers/{{book.assetid}}.jpg" />
+    <media:content medium="image" url="/assets/covers/{{book.assetid}}.jpg" xmlns:media="http://search.yahoo.com/mrss/" />
   </entry>
   {%- endfor %} 
- 
-
 </feed>

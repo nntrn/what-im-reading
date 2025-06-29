@@ -17,7 +17,7 @@ page_style: |
 {%- assign maxcount = site.data.books %}
 
 <div class="flex px-1 py-1 gap-xl sm-col" style="z-index:1;flex-direction:column-reverse">
-  <div class="books" data-sort="created">
+  <div class="books" data-sort="updated">
     {% for book in books %}
     {% assign title = book.title | replace: '"', "" | split: " (" | first | split: "," | first | split: ":" | first -%}
     <div class="book ci" data-count="{{book.count}}" data-updated="{{book.modified}}" data-created="{{book.created}}">

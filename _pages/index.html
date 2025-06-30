@@ -2,38 +2,30 @@
 title: Home
 layout: default 
 permalink: / 
-inline_css: ["books.css"]
+inline_css: ["index.css"]
 inline_js: ["url.js"]
-page_style: |
-  header{position:relative}
-  .bookstats{align-items:end;display:flex;justify-content:space-between;align-content:flex-end;line-height:1;font-size:.8em;margin-bottom:.5rem;width:100%}
-  .bookstats span{white-space:pre}
-  [data-label=created]{display:none}
-  [data-sort=created] [data-label=updated]{display:none}
-  [data-sort=created] [data-label=created]{display:block}
 ---
-
 {%- assign books = site.data.books | sort:"modified" | reverse %}
 {%- assign maxcount = site.data.books %}
 
 <div class="flex px-1 py-1 gap-xl sm-col" style="z-index:1;flex-direction:column-reverse">
-  <div class="books" data-sort="updated">
-    {% for book in books %}
-    {% assign title = book.title | replace: '"', "" | split: " (" | first | split: "," | first | split: ":" | first -%}
-    <div class="book ci" data-count="{{book.count}}" data-updated="{{book.modified}}" data-created="{{book.created}}">
-      <div class="bookstats">
-        <span class="icon icon-note">{{book.count}}</span>
-        <span data-label="created">{{book.created|date:'%b %e %Y'}}</span>
-        <span data-label="updated">{{book.modified|date:'%b %e %Y'}}</span>
-      </div>      
-      <a class="flex column gap-lg" href="{{ site.baseurl }}/{{book.url}}">
-        <img src="{{ site.baseurl }}/assets/covers/{{book.assetid}}.jpg" title="{{title}} by {{book.author}}" />
-        <label class="genre" title="{{book.tags}}"><strong>{{title}}</strong></label>
-      </a>
-      <span class="clamp fs-90 w-100 center muted" title="{{book.author}}">{{ book.author }}</span>
-    </div>
-    {%- endfor %}
+<div class="books" data-sort="created">
+{% for book in books %}
+{% assign title = book.title | replace: '"', "" | split: " (" | first | split: "," | first | split: ":" | first -%}
+  <div class="book ci" data-count="{{book.count}}" data-updated="{{book.modified}}" data-created="{{book.created}}">
+    <div class="bookstats">
+      <span class="icon icon-note">{{book.count}}</span>
+      <span data-label="created">{{book.created|date:'%b %e %Y'}}</span>
+      <span data-label="updated">{{book.modified|date:'%b %e %Y'}}</span>
+    </div>      
+    <a class="flex column gap-lg" href="{{ site.baseurl }}/{{book.url}}">
+      <img src="{{ site.baseurl }}/assets/covers/{{book.assetid}}.jpg" title="{{title}} by {{book.author}}" />
+      <label class="genre" title="{{book.tags}}"><strong>{{title}}</strong></label>
+    </a>
+    <span class="clamp fs-90 w-100 center muted" title="{{book.author}}">{{ book.author }}</span>
   </div>
-  <div class="cc" data-counter-label="book(s)"></div>
+{%- endfor %}
+</div>
+<div class="cc" data-counter-label="book(s)"></div>
 </div>
 

@@ -1,43 +1,26 @@
 ---
 permalink: /feed.xml
 ---
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom" {% if site.lang %}xml:lang="{{ site.lang }}"{% endif %}>
-
-  <link href="{{ page.url | absolute_url }}" rel="self" type="application/atom+xml" />
-  <link href="{{ '/' | absolute_url }}" rel="alternate" type="text/html" {% if site.lang %}hreflang="{{ site.lang }}" {% endif %}/>
-  <updated>{{ site.time | date_to_xmlschema }}</updated>
-  <id>{{ page.url | absolute_url | xml_escape }}</id>
-
-  {% assign title = site.title | default: site.name %}
-  {% if title %}
-  <title type="html">{{ title | smartify | xml_escape }}</title>{% endif %}
-  {% if site.description %}
-  <subtitle>{{ site.description | xml_escape }}</subtitle>{% endif %}
-  {% if site.author %}
-  <author>
-    <name>{{ site.author.name | default: site.author | xml_escape }}</name>
-  </author>
-  {% endif %}
-
-  {%- for book in site.data.books %}
-  <entry>
-    {%- assign post_title = book.title | smartify | strip_html | normalize_whitespace | xml_escape %}
-    <title type="html">{{ post_title }}</title>
-    <link href="{{ book.url | absolute_url }}" rel="alternate" type="text/html" title="{{ post_title }}" />
-    <published>{{book.created | date_to_xmlschema}}</published>
-    <updated>{{book.modified | date_to_xmlschema}}</updated>
-    <id>{{ book.assetid }}</id>
-    {%- assign excerpt_only = post.feed.excerpt_only | default: site.feed.excerpt_only -%}
-    {%- unless excerpt_only -%}
-    <content type="html" xml:base="{{ book.url | absolute_url | xml_escape }}"><![CDATA[{{ post.content | strip }}]]></content>
-    {%- endunless %}
-    <author>
-      <name>{{book.author | xml_escape}}</name>
-    </author>
-    <category term="{{book.tags}}" />
-    <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="/assets/covers/{{book.assetid}}.jpg" />
-    <media:content medium="image" url="/assets/covers/{{book.assetid}}.jpg" xmlns:media="http://search.yahoo.com/mrss/" />
-  </entry>
-  {%- endfor %} 
-</feed>
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+	<title>{%- assign title=site.title|default: site.name -%}{{title|xml_escape}}</title>
+	<description>{% if site.description %}{{ site.description | xml_escape }}{% endif %}</description>
+	<link>{{ site.url }}</link>
+	<link href="{{ page.url | absolute_url }}" rel="self" type="application/atom+xml" />
+	<atom:link href="{{ site.url }}/feed.xml" rel="self" type="application/rss+xml" />
+	{%- for book in site.data.books %}
+		{%- if book.count < 10 -%}{% else %}
+		{%- assign booktitle=book.title|replace:'"',""|split: " ("|first|split: ","|first|split:":"|first %}
+		<item>
+			<title>{{ booktitle | xml_escape }} - Highlights</title>
+			<description>{{book.author| xml_escape}}</description>
+			<pubDate>{{ book.created | date: "%a, %d %b %Y %H:%M:%S %z" }}</pubDate>
+			<link>{{ book.url | absolute_url }}</link>
+			<guid isPermaLink="true">{{ book.url | absolute_url }}</guid>
+			<category>{{ book.tags | xml_escape }}</category>
+		</item>
+		{% endif -%}
+	{%- endfor -%}
+</channel>
+</rss>

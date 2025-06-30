@@ -9,7 +9,7 @@
       {%- if book.slug == page.slug -%}
       <strong>{{book.title}}</strong>
       {%- else -%}
-      <a href="{{book.url|relative_url}}" class="gc">{{book.title}}</a>
+      <a href="{{book.url|relative_url}}">{{book.title}}</a>
       {%- endif %} by {{book.author}}
     </li>
   {%- endfor %}

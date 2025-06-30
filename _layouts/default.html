@@ -5,7 +5,7 @@
   <title>{{ page.title | default:site.title }}</title>
   {% else -%}
   <title>{{site.title}}</title>
-  {%- endif -%}
+  {% endif %}
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="UTF-8">
@@ -17,23 +17,19 @@
   <meta name="Compiled by" content="{{site.author}} (@{{site.github_username}})">
   <meta name="robots" content="index, follow">
 
-  
 <style>
-  {% include style.css %}
+{% include style.css %}
 </style>
-
-{%- if page.inline_css %}
+{% if page.inline_css %}
 <style>
-{%- for css in page.inline_css -%}
+{% for css in page.inline_css -%}
 {% include {{css}} %}
-
-{%- endfor %}
+{% endfor %}
 </style>
 {%- endif %}
-
-{%- if page.page_style -%}
+{%- if page.page_style %}
 <style>
-  {{ page.page_style }}
+{{ page.page_style }}
 </style>
 {%- endif %}
 

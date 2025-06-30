@@ -22,6 +22,12 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;height:6px;width
 input[type=range]::-webkit-slider-runnable-track{-webkit-appearance:none;box-shadow:none;border:none;background:0 0}
 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;height:10px;width:10px;border-radius:100%;background:#fff;cursor:ew-resize;box-shadow:0 0 2px 0 #555}
 [type=range]::-moz-range-thumb{box-sizing:border-box;border:1px solid #222;width:11px;height:11px;border-radius:50%;background:#fff}
+header{position:relative}
+.bookstats{align-items:end;display:flex;justify-content:space-between;align-content:flex-end;line-height:1;font-size:.8em;margin-bottom:.5rem;width:100%}
+.bookstats span{white-space:pre}
+[data-label=created]{display:none}
+[data-sort=created] [data-label=updated]{display:none}
+[data-sort=created] [data-label=created]{display:block}
 @media (max-width:690px){
 .books{justify-content:space-around;align-items:unset;align-content:unset}
 header{position:relative}

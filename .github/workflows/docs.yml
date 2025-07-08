@@ -12,6 +12,8 @@ on:
     paths:
       - "_includes/**"
       - "_layouts/**"
+      - "_pages/**"
+      - "_plugins/**"
 
 permissions:
   contents: read

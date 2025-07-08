@@ -1,5 +1,7 @@
 include "books";   
 
+def cleannbsp: gsub("[\u202F\u00A0]";" ";"x");
+
 def stop: {
   all: ["able","about","across","after","all","almost","also","among","and","any","are","because","been","but","can","cannot","could","dear","did","does","either","else","ever","every","for","from","get","got","had","has","have","her","hers","him","his","how","however","into","its","just","least","let","like","likely","may","might","most","must","neither","nor","not","off","often","only","other","our","own","rather","said","say","says","she","should","since","some","than","that","the","their","them","then","there","these","they","this","tis","too","twas","wants","was","were","what","when","where","which","while","who","whom","why","will","with","would","yet","you","your"],
 
@@ -30,12 +32,13 @@ def create_activity_data:
   | map({
       id: .Z_PK,
       assetid: .ZASSETID,
-      text: (.ZANNOTATIONSELECTEDTEXT|unsmart|remove_cites|format_quotes|join("\n")),
+      text: (.ZANNOTATIONSELECTEDTEXT|unsmart|format_quotes|cleannbsp),
       created: .ZANNOTATIONCREATIONDATE,
       location: .ZANNOTATIONLOCATION,
       cfi: (.ZANNOTATIONLOCATION|[match("\\b[0-9]{1,4}\\b";"g").string|tonumber|lpad(3)]|join(".")),
-      chapter: (if ((.ZFUTUREPROOFING5|length)>0) then .ZFUTUREPROOFING5 else (.ZANNOTATIONLOCATION|format_location)? // .rangestart end),
-      rangestart: .ZPLLOCATIONRANGESTART
+      chapter: ((.ZFUTUREPROOFING5? // (.ZANNOTATIONLOCATION|format_location)? // "" ) | cleannbsp ),
+      rangestart: .ZPLLOCATIONRANGESTART,
+      location_tags: (.ZANNOTATIONLOCATION|getinsidecfi)
   }) | sort_by(.id);
 
 def create_word_data:

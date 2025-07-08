@@ -95,20 +95,10 @@ _main() {
     jq_from_annotations create_book_data >$DATADIR/books.json &
     jq_from_annotations create_genre_data >$DATADIR/genres.json &
     jq_from_annotations create_activity_data >$DATADIR/activity.json
-    # jq_from_annotations create_word_data >$DATADIR/words.json &
-    # wait %3
 
     jq_from_activity stats_bookmarks_per_month >$DATADIR/stats/bookmarks_per_month.json &
     jq_from_activity stats_month >$DATADIR/stats/month.json &
     jq_from_activity stats_history >$DATADIR/history.json
-    # wait %3
-
-    # _log "* Creating _includes/activity.txt"
-
-  #   jq -r -L $_scriptdir --slurpfile books $DATADIR/books.json 'include "annotations"; stats_history_text' \
-  #     $DATADIR/history.json >$OUTDIR/_pages/activity.txt
-  #
-  #   cat $OUTDIR/_pages/activity.txt >$OUTDIR/_includes/activity.txt
 
   fi
 }

@@ -8,8 +8,8 @@ inline_js: ["url.js"]
 {%- assign books = site.data.books | sort:"modified" | reverse %}
 {%- assign maxcount = site.data.books %}
 
-<div class="flex px-1 py-1 gap-xl sm-col" style="z-index:1;flex-direction:column-reverse">
-<div class="books" data-sort="created">
+<div class="flex px-1 py-1 gap-xl" style="z-index:1;flex-direction:column-reverse">
+<div class="books" data-sort="created" style="--clamp-lines:2">
 {% for book in books %}
 {% assign title = book.title | replace: '"', "" | split: " (" | first | split: "," | first | split: ":" | first -%}
   <div class="book ci" data-count="{{book.count}}" data-updated="{{book.modified}}" data-created="{{book.created}}">
@@ -19,7 +19,7 @@ inline_js: ["url.js"]
       <span data-label="updated">{{book.modified|date:'%b %e %Y'}}</span>
     </div>      
     <a class="flex column gap-lg" href="{{ site.baseurl }}/{{book.url}}">
-      <img src="{{ site.baseurl }}/assets/covers/{{book.assetid}}.jpg" title="{{title}} by {{book.author}}" />
+      <img loading="lazy" src="{{ site.baseurl }}/assets/covers/{{book.assetid}}.jpg" title="{{title}} by {{book.author}}" />
       <label class="genre" title="{{book.tags}}"><strong>{{title}}</strong></label>
     </a>
     <span class="clamp fs-90 w-100 center muted" title="{{book.author}}">{{ book.author }}</span>

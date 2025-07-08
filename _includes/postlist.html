@@ -1,11 +1,11 @@
 {%- assign pagetag = page.tags  %}
 {%- assign books = site.data.books | where: 'tags', pagetag |sort: 'title' %}
 
-<aside class="nav my-3 col gap">
+<aside class="nav">
   <h4>Other posts in <a class="dotted" href="{{pagetag|relative_url}}">{{pagetag|upcase}}</a></h4>
   <ul class="post-list">
   {%- for book in books %}
-    <li data-count="{{book.count}}">
+    <li class="li" data-count="{{book.count}}">
       {%- if book.slug == page.slug -%}
       <strong>{{book.title}}</strong>
       {%- else -%}

@@ -6,15 +6,16 @@
 .highlighted .qq:after{content:"";display:block}
 .highlighted .q{background:hsl(50,80%,83.5%);display:inline;line-height:1.5}
 .post-list li a{line-height:1.5;--box-shadow:currentColor;box-shadow:inset 0 -1.25px 0 #fff,inset 0 -3px 0 var(--box-shadow);text-decoration:none;transition:box-shadow .3s}
-.post-list li a:hover{--box-shadow:#b0c6f5}
+.post-list li a:hover{--box-shadow:var(--border-color)}
 li[data-count]:after{content:"• "attr(data-count);font-size:.9em;line-height:1}
 aside.nav li strong{font-weight:900}
-.timestamp a{background:unset;text-decoration:none}
+.timestamp a{text-decoration:none}
 .timestamp{display:block;margin-top:2px;font-weight:700}
 @media (max-width:700px){
 .page-content{padding-left:1rem;padding-right:1rem;flex:1;max-width:unset}
 .sidebar{flex:1}
 .container{flex-direction:column;display:flex}
+aside.nav{padding:2rem .5rem}
 }
 @media (min-width:700px){
 .highlighted{max-width:50vw!important}
@@ -22,7 +23,7 @@ aside.nav li strong{font-weight:900}
 .container{flex-direction:row-reverse;display:flex;padding:.5rem}
 .separator{padding-right:2rem;border-right:1px dotted #222}
 }
-@media (max-width:600px){
+@media (max-width:700px){
 .sidebar ul{margin:0 1rem;padding:0}
 .annotation-list{margin:0 1rem;padding:0 .5rem}
 .separator{border-top:1px dotted #222;padding-top:1rem}

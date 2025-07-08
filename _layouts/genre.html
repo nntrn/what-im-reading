@@ -4,10 +4,10 @@ type: genre
 ---
 {%-  assign booklist = page.books | sort: "title" %}
 <section class="box">
-  <h2>{{page.tag|replace: "-"," "}}</h2>
+  <h2 class="up">{{page.tag|replace: "-"," "}}</h2>
   <ol style="width:90%" class="col gap-lg book-list">
     {%- for book in booklist %}
-    <li>
+    <li class="li">
       <div class="flex col">
         <span class="title"><a href="{{book.slug}}">{{book.title}}</a> by {{book.author|split: ","|first}}</span>
         <span class="infobox flex gap small">

@@ -6,16 +6,17 @@
   {% else -%}
   <title>{{site.title}}</title>
   {% endif %}
+
+  <meta name="viewport" content="width=device-width">
+  <meta charset="UTF-8">
+  <meta name="description" content="{{site.description}}" />
+  <meta name="author" content="{{site.author}} (@{{site.github_username}})">
+  <meta name="robots" content="index, follow">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta charset="UTF-8">
   <link rel="canonical" href="{{ page.url | absolute_url }}" />
   <link rel="icon" href="{{'/assets/favicon.ico'|absolute_url}}" type="image/x-icon">
   <link href="{{'/feed.xml'|absolute_url}}" rel="self" type="application/atom+xml"/>
-  <meta name="description" content="{{site.description}}" />
-  {% if page.author %}<meta name="author" content="{{page.author}}" /> {%- endif %}
-  <meta name="Compiled by" content="{{site.author}} (@{{site.github_username}})">
-  <meta name="robots" content="index, follow">
 
 <style>
 {% include style.css %}
@@ -38,14 +39,14 @@
 <body data-layout="{{page.layout}}">
 
   <header>
-    <h1 title="{{site.title}}"><a class="gc site-title" href="{{ '/' | relative_url }}">{{site.title}}</a></h1>
+    <a href="{{ '/' | relative_url }}"><h1 class="site-title">{{site.title}}</h1></a>
   </header>
   {% if page.title == 'Home' %}{% include panel.html %}{% endif %}
 
   <main>
   {{- content -}}
-  {% include footer.html %}
   </main>
+  {% include footer.html %}
 
   {% if page.inline_js %}
   <script>

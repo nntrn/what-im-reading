@@ -28,6 +28,7 @@ inline_css: ["book.css"]
       {%- endfor -%}
     </div>
     <hr>
+    <section class="reader">
     {%- assign chapters = annotations | group_by: "chapter" -%}
     {%- for chapter in chapters -%}
     {%- assign sortedchapteritems = chapter.items | sort: "cfi" %}
@@ -45,8 +46,9 @@ inline_css: ["book.css"]
       {%- endfor %}
     </ul>
     {%- endfor %}
+    </section>
   </div>
-  <div class="sidebar pt-0 mt-1 pr-0">
+  <div class="sidebar pt-0 mt-1 pr-0 px-1">
     <div class="separator">
     {%- include postlist.html -%}
     </div>

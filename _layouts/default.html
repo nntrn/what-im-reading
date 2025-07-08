@@ -6,17 +6,26 @@
   {% else -%}
   <title>{{site.title}}</title>
   {% endif %}
-
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width">
   <meta charset="UTF-8">
+  <link rel="canonical" href="{{ page.url | absolute_url }}" />
+  <link rel="icon" href="{{site.favicon_ico|relative_url}}" type="image/x-icon">
+  <meta name="theme-color" content="#3a7ddf">
   <meta name="description" content="{{site.description}}" />
   <meta name="author" content="{{site.author}} (@{{site.github_username}})">
   <meta name="robots" content="index, follow">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="canonical" href="{{ page.url | absolute_url }}" />
-  <link rel="icon" href="{{'/assets/favicon.ico'|absolute_url}}" type="image/x-icon">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta property="og:site_name" content="{{ site.title }}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ page.url | absolute_url }}">
+  <meta property="og:title" content="{{ page.title | default: site.title }}">
+  <meta property="og:description" content="{{ page.description | default: site.description }}">
   <link href="{{'/feed.xml'|absolute_url}}" rel="self" type="application/atom+xml"/>
+
 
 <style>
 {% include style.css %}

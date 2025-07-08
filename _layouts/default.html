@@ -39,7 +39,7 @@
 <body data-layout="{{page.layout}}">
 
   <header>
-    <a href="{{ '/' | relative_url }}"><h1 class="site-title">{{site.title}}</h1></a>
+    <a style="text-decoration:unset" href="{{ '/' | relative_url }}"><h1 class="site-title">{{site.title}}</h1></a>
   </header>
   {% if page.title == 'Home' %}{% include panel.html %}{% endif %}
 

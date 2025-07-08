@@ -117,6 +117,7 @@ td:empty{border:0}
 .page-content li{margin:0;white-space:pre-wrap;font-weight:400}
 .chapter-title{margin:.75rem 0;margin-top:1.75rem}
 .px-wide{padding-right:1rem;padding-left:1rem}
+select,option{color:#222}
 @media (min-width:700px){
 .book-author:before{display:inline}
 .px-wide{padding-right:2.75rem!important;padding-left:2.75rem!important}

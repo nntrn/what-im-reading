@@ -49,3 +49,5 @@ exclude:
   - annotations.json
   - scripts
   - .github
+  - covers.zip
+
